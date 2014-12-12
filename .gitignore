@@ -16,3 +16,5 @@ hs_err_pid*
 #*#
 
 /ejb-test/target/
+/ACID-web/target/
+/ACID-ear/target/

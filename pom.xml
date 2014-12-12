@@ -6,12 +6,15 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>ACID</name>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
     <modules>
         <module>ACID-ear</module>
         <module>ACID-web</module>
-    <module>ejb-test</module>
-  </modules>
+        <module>ejb-test</module>
+    </modules>
+  
 </project>
