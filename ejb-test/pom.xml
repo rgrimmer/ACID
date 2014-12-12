@@ -8,15 +8,42 @@
     </parent>
 
     <groupId>org</groupId>
-    <artifactId>ACID-ear</artifactId>
+    <artifactId>ejb-test</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>ear</packaging>
+    <packaging>ejb</packaging>
 
-    <name>ACID-ear</name>
+    <name>ejb-test</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>javaee</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.jonas</groupId>
+            <artifactId>jonas-client</artifactId>
+            <version>5.3.0-RC1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.carol</groupId>
+            <artifactId>carol</artifactId>
+            <version>3.0.10</version>
+        </dependency>
+
+    </dependencies>
+
+    <repositories>
+        <repository> <!-- for javaee:javaee-api -->
+            <id>java.net2</id>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -31,26 +58,13 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <version>2.6</version>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.1</version>
                 <configuration>
-                    <version>5</version>
-                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <ejbVersion>3.0</ejbVersion>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>org</groupId>
-            <artifactId>ACID-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ejb-test</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 </project>

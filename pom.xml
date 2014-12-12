@@ -12,5 +12,6 @@
     <modules>
         <module>ACID-ear</module>
         <module>ACID-web</module>
-    </modules>
+    <module>ejb-test</module>
+  </modules>
 </project>
