@@ -15,6 +15,11 @@ hs_err_pid*
 *~
 #*#
 
+# Output directory
 /ejb-test/target/
 /ACID-web/target/
 /ACID-ear/target/
+
+# Netbeans configurations
+nb-configuration.xml
+
