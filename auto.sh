@@ -1,5 +1,5 @@
 #!/bin/bash
-JONASDIR="/home/.../jonas-full-5.3.0-RC1" # TODO: set absolute path of jonas directory
+JONASDIR="/home/.../jonas-full..." # TODO: set absolute path of jonas directory
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"
@@ -97,7 +97,7 @@ deploy() {
 	if [[ -d "$f/$TARGETDIR" ]]; then
 	    for file in $(ls -1 $f/$TARGETDIR/*.{jar,war,ear} 2>/dev/null); do
 		deployFile "$file"
-		local deployerr=$?
+		local deployerr=$ERR
 		if [[ $deployerr -eq 0 ]]; then
 		    nb=$((nb+1))
 		else
@@ -108,7 +108,7 @@ deploy() {
     done
     if [[ $nb -gt 0 ]]; then
 	print_success "Deployed: $nb files"
-    else
+    elif [[ $ERR -eq 0  ]]; then
 	print_err "Nothing to deploy. Build the project before deploying it."
     fi
     print_title "Deployment finished"
