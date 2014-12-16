@@ -15,6 +15,10 @@ help() {
     $ECHO "Usage: $0 <option>"
     $ECHO "Build, clean, deploy the project.\n"
     $ECHO "Options :"
+    $ECHO " j\tStart JOnAS"
+    $ECHO " js\tStop JOnAS"
+    $ECHO " jc\nClean JOnAS (remove all deployed files)"
+    $ECHO " jr\tReset JOnAS (stop, clean, start)"
     $ECHO " b\tBuild the project"
     $ECHO " c\tClean the project"
     $ECHO " cb\tClean and build the project"
@@ -54,6 +58,24 @@ print_success() {
 
 print_err() {
     echo -e "\e[0;31m$1\e[0m"
+}
+
+start_jonas() {
+    $JONASDIR/bin/jonas -clean start
+}
+
+stop_jonas() {
+    $JONASDIR/bin/jonas stop
+}
+
+clean_jonas() {
+    rm -vrf $DEPLOYDIR/*.{ear,jar,war}
+}
+
+reset_jonas() {
+    stop_jonas
+    clean_jonas
+    start_jonas
 }
 
 clean() {
@@ -130,6 +152,18 @@ if [[ $# -eq 0 ]]; then
 fi
 
 case "$1" in
+    "j")
+	start_jonas
+	;;
+    "js")
+	stop_jonas
+	;;
+    "jc")
+	clean_jonas
+	;;
+    "jr")
+	reset_jonas
+	;;
     "b")
 	build
 	;;
