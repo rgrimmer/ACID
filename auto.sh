@@ -17,7 +17,7 @@ help() {
     $ECHO "Options :"
     $ECHO " j\tStart JOnAS"
     $ECHO " js\tStop JOnAS"
-    $ECHO " jc\nClean JOnAS (remove all deployed files)"
+    $ECHO " jc\tClean JOnAS (remove all deployed files)"
     $ECHO " jr\tReset JOnAS (stop, clean, start)"
     $ECHO " b\tBuild the project"
     $ECHO " c\tClean the project"
