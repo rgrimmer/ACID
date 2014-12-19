@@ -25,3 +25,4 @@ nb-configuration.xml
 
 # Ignore the bash script as people need to customize it.
 auto.sh
+/ejb-entities/target/

@@ -20,23 +20,25 @@
                 </a>
             </div>
 
-            <form class="form-register" role="form">
+                <form class="form-register" role="form" method="POST" action="${pageContext.request.contextPath}/register">
                 <h2 class="form-register-heading">Register</h2>
-                <label for="inputEmail" class="sr-only">Username</label>
-                <input id="inputUsername" type="username" class="form-control" placeholder="Username" required autofocus>
+                <label for="inputUsername" class="sr-only">Username</label>
+                <input id="inputUsername" name="inputUsername" type="username" class="form-control" placeholder="Username" required autofocus>
 
                 <label for="inputEmail" class="sr-only">Email address</label>
-                <input id="inputEmail" type="email" class="form-control" placeholder="Email address" required>
+                <input id="inputEmail" name="inputEmail" type="email" class="form-control" placeholder="Email address" required>
 
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input id="inputPassword" type="password" class="form-control" placeholder="Password" required>
+                <input id="inputPassword" name="inputPassword" type="password" class="form-control" placeholder="Password" required>
 
                 <label for="inputPasswordConfirmation" class="sr-only">Password (confirmation)</label>
-                <input id="inputPasswordConfirmation" type="password" class="form-control" placeholder="Password (confirmation)" required>
+                <input id="inputPasswordConfirmation" name="inputPasswordConfirmation" type="password" class="form-control" placeholder="Password (confirmation)" required>
 
                 <button id="submitBtn" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 
                 <a id="loginLink" href="${pageContext.request.contextPath}/login" class="btn btn-lg btn-info btn-block">Login</a>
+                
+                <div class="error">${errorMsg}</div>
             </form>
         </div>
     </body>

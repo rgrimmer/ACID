@@ -20,18 +20,19 @@
                 </a>
             </div>
 
-            <form class="form-signin" role="form">
+            <form class="form-signin" role="form" method="POST" action="${pageContext.request.contextPath}/login">
                 <h2 class="form-signin-heading">Login</h2>
 
                 <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
 
                 <button id="submitBtn" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 
                 <a id="registerBtn" href="${pageContext.request.contextPath}/register" class="btn btn-lg btn-info btn-block">Create an account</a>
+                <div class="error">${errorMsg}</div>
             </form>
         </div>
     </body>
