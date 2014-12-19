@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.acid.ejb.entities.User;
+import org.acid.ejb.logger.Logger;
 import org.acid.ejb.pwhash.PasswordHash;
 
 @Stateless(mappedName = "entityManager")
@@ -17,6 +18,9 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
 
     @EJB(mappedName = "pwhash")
     private PasswordHash pwHash;
+
+    @EJB(mappedName = "logger")
+    private Logger logger;
 
     public EntityManagerImpl() {
     }
@@ -31,6 +35,7 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
         //user.setPassword(pwHash.hash(user.getPassword()));
         em.persist(user);
         em.flush();
+        logger.info("EJB-entities", "User '" + user.getName() + "' created");
         return user.getIdUser();
     }
 
@@ -45,7 +50,7 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
                 .setParameter("email", emailAddress);
         return (User) getSingleResultOrNull(query);
     }
-    
+
     @Override
     public boolean isGoodPassword(String password, User user) {
         return pwHash.equals(password, user.getPassword());

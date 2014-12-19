@@ -12,6 +12,7 @@
     </properties>
     
     <modules>
+        <module>ejb-logger</module>
         <module>ejb-pwhash</module>
         <module>ejb-entities</module>
         <module>ACID-web</module>

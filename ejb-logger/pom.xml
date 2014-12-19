@@ -8,10 +8,10 @@
     </parent>
 
     <groupId>org</groupId>
-    <artifactId>ejb-pwhash</artifactId>
+    <artifactId>ejb-logger</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>ejb</packaging>
-    <name>ejb-pwhash</name>
+    <name>ejb-logger</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,11 +33,6 @@
             <groupId>org.ow2.jonas.assemblies</groupId>
             <artifactId>client-jar</artifactId>
             <version>5.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ejb-logger</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

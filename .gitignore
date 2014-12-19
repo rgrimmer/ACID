@@ -27,3 +27,4 @@ nb-configuration.xml
 auto.sh
 /ejb-entities/target/
 /ejb-pwhash/target/
+/ejb-logger/target/

@@ -4,7 +4,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.acid.ejb.logger.Logger;
 
 @Stateless(mappedName = "pwhash")
 public class PasswordHashImpl implements PasswordHash {
@@ -14,13 +16,21 @@ public class PasswordHashImpl implements PasswordHash {
 
     private final MessageDigest md;
 
+    @EJB(mappedName = "logger")
+    private Logger logger;
+
     public PasswordHashImpl() throws NoSuchAlgorithmException {
-        md = MessageDigest.getInstance(ALGORITHM);
+        try {
+            md = MessageDigest.getInstance(ALGORITHM);
+        } catch (NoSuchAlgorithmException ex) {
+            logger.fatal("EJB-pwhash", "EJB 'PasswordHash' could not initialized the algorithm '" + ALGORITHM + "'", ex);
+            throw ex;
+        }
     }
 
     @Override
     public String hash(String src) {
-        byte[] hashBytes = md.digest(src.getBytes());
+        byte[] hashBytes = md.digest(src.getBytes(CHARSET));
         StringBuilder hexString = new StringBuilder();
         for (Byte b : hashBytes) {
             hexString.append(Integer.toHexString(0xFF & b));
