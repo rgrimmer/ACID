@@ -1,5 +1,5 @@
 #!/bin/bash
-JONASDIR="/opt/pad/jonas-full-5.3.0" # TODO: set absolute path of jonas directory
+JONASDIR="/home/.../jonas-full-5.3.0" # TODO: set absolute path of jonas directory
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"
@@ -115,19 +115,21 @@ deployFile() {
 deploy() {
     print_title "Deploying..."
     local nb=0
-    for f in *; do
-	if [[ -d "$f/$TARGETDIR" ]]; then
-	    for file in $(ls -1 $f/$TARGETDIR/*.{jar,war,ear} 2>/dev/null); do
-		deployFile "$file"
-		local deployerr=$ERR
-		if [[ $deployerr -eq 0 ]]; then
-		    nb=$((nb+1))
-		else
-		    ERR=1
-		fi
-	    done
-	fi
-    done
+    deployFile ACID-ear/target/*.ear
+    nb=$((nb+1))
+#    for f in *; do
+#	if [[ -d "$f/$TARGETDIR" ]]; then
+#	    for file in $(ls -1 $f/$TARGETDIR/*.{jar,war,ear} 2>/dev/null); do
+#		deployFile "$file"
+#		local deployerr=$ERR
+#		if [[ $deployerr -eq 0 ]]; then
+#		    nb=$((nb+1))
+#		else
+#		    ERR=1
+#		fi
+#	    done
+#	fi
+ #   done
     if [[ $nb -gt 0 ]]; then
 	print_success "Deployed: $nb files"
     elif [[ $ERR -eq 0  ]]; then
