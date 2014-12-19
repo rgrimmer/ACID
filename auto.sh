@@ -1,5 +1,5 @@
 #!/bin/bash
-JONASDIR="/home/.../jonas-full..." # TODO: set absolute path of jonas directory
+JONASDIR="/opt/pad/jonas-full-5.3.0" # TODO: set absolute path of jonas directory
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"

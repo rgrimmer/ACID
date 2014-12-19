@@ -4,10 +4,14 @@ import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.acid.ejb.entities.User;
 
 public class TestMain {
 
     public static final String JNDI_NAME = "testEJB";
+    
 
     public static void main(String[] args) {
 
@@ -19,7 +23,10 @@ public class TestMain {
         try {
             Context ctx = new InitialContext(env);
             TestRemote ref = (TestRemote) ctx.lookup(JNDI_NAME);
-            System.out.println(ref.test());
+            //User user = manager.find(User.class, 1);
+            
+           // System.out.println("user : " + user.getEmail());
+            //System.out.println(ref.test());
         } catch (NamingException ex) {
             System.err.println(ex);
         }
