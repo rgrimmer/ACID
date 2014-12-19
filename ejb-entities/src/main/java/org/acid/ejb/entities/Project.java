@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.acid.ejb.entities;
 
 import java.io.Serializable;
@@ -27,10 +22,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author thenion
- */
 @Entity
 @Table(name = "Project")
 @XmlRootElement
@@ -39,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Project.findByIdProject", query = "SELECT p FROM Project p WHERE p.idProject = :idProject"),
     @NamedQuery(name = "Project.findByName", query = "SELECT p FROM Project p WHERE p.name = :name")})
 public class Project implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,20 +116,16 @@ public class Project implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Project)) {
+        if (object == null || !(object instanceof Project)) {
             return false;
         }
         Project other = (Project) object;
-        if ((this.idProject == null && other.idProject != null) || (this.idProject != null && !this.idProject.equals(other.idProject))) {
-            return false;
-        }
-        return true;
+        return idProject.equals(other.getIdProject());
     }
 
     @Override
     public String toString() {
         return "org.acid.ejb.entities.Project[ idProject=" + idProject + " ]";
     }
-    
+
 }

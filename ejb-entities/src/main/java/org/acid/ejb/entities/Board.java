@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.acid.ejb.entities;
 
 import java.io.Serializable;
@@ -27,10 +22,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author thenion
- */
 @Entity
 @Table(name = "Board")
 @XmlRootElement
@@ -39,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Board.findByIdBoard", query = "SELECT b FROM Board b WHERE b.idBoard = :idBoard"),
     @NamedQuery(name = "Board.findByName", query = "SELECT b FROM Board b WHERE b.name = :name")})
 public class Board implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -135,20 +127,16 @@ public class Board implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Board)) {
+        if (object == null || !(object instanceof Board)) {
             return false;
         }
         Board other = (Board) object;
-        if ((this.idBoard == null && other.idBoard != null) || (this.idBoard != null && !this.idBoard.equals(other.idBoard))) {
-            return false;
-        }
-        return true;
+        return idBoard.equals(other.getIdBoard());
     }
 
     @Override
     public String toString() {
         return "org.acid.ejb.entities.Board[ idBoard=" + idBoard + " ]";
     }
-    
+
 }

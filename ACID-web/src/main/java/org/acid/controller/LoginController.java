@@ -24,14 +24,17 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView loginPost(HttpServletRequest request,
-            @RequestParam(value = "inputEmail", required = true) String inputEmail,
-            @RequestParam(value = "inputPassword", required = true) String inputPassword) {
-        System.out.println(inputEmail);
-        System.out.println(inputPassword);
+                                  @RequestParam(value = "inputEmail", required = true) String inputEmail,
+                                  @RequestParam(value = "inputPassword", required = true) String inputPassword) {
         User user = entityManager.getUserByEmailAddress(inputEmail);
         if (user == null) {
             ModelAndView mv = new ModelAndView("login");
             mv.addObject("errorMsg", "There isn't an account for this email");
+            return mv;
+        }
+        if (!entityManager.isGoodPassword(inputPassword, user)) {
+            ModelAndView mv = new ModelAndView("login");
+            mv.addObject("errorMsg", "Invalid password");
             return mv;
         }
         return new ModelAndView("redirect:/");

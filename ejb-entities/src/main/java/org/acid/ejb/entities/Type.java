@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.acid.ejb.entities;
 
 import java.io.Serializable;
@@ -23,10 +18,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author thenion
- */
 @Entity
 @Table(name = "Type")
 @XmlRootElement
@@ -35,6 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Type.findByIdType", query = "SELECT t FROM Type t WHERE t.idType = :idType"),
     @NamedQuery(name = "Type.findByLabel", query = "SELECT t FROM Type t WHERE t.label = :label")})
 public class Type implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,20 +87,16 @@ public class Type implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Type)) {
+        if (object == null || !(object instanceof Type)) {
             return false;
         }
         Type other = (Type) object;
-        if ((this.idType == null && other.idType != null) || (this.idType != null && !this.idType.equals(other.idType))) {
-            return false;
-        }
-        return true;
+        return idType.equals(other.getIdType());
     }
 
     @Override
     public String toString() {
         return "org.acid.ejb.entities.Type[ idType=" + idType + " ]";
     }
-    
+
 }

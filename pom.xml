@@ -12,9 +12,10 @@
     </properties>
     
     <modules>
-        <module>ACID-ear</module>
-        <module>ACID-web</module>
+        <module>ejb-pwhash</module>
         <module>ejb-entities</module>
+        <module>ACID-web</module>
+        <module>ACID-ear</module>
     </modules>
   
 </project>

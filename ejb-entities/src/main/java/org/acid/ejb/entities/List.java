@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.acid.ejb.entities;
 
 import java.io.Serializable;
@@ -24,10 +19,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author thenion
- */
 @Entity
 @Table(name = "List")
 @XmlRootElement
@@ -36,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "List.findByIdList", query = "SELECT l FROM List l WHERE l.idList = :idList"),
     @NamedQuery(name = "List.findByLabel", query = "SELECT l FROM List l WHERE l.label = :label")})
 public class List implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,20 +99,16 @@ public class List implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof List)) {
+        if (object == null || !(object instanceof List)) {
             return false;
         }
         List other = (List) object;
-        if ((this.idList == null && other.idList != null) || (this.idList != null && !this.idList.equals(other.idList))) {
-            return false;
-        }
-        return true;
+        return idList.equals(other.getIdList());
     }
 
     @Override
     public String toString() {
         return "org.acid.ejb.entities.List[ idList=" + idList + " ]";
     }
-    
+
 }
