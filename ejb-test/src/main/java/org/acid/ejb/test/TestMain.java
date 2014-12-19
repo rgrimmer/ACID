@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 public class TestMain {
 
     public static final String JNDI_NAME = "testEJB";
-
+    
     public static void main(String[] args) {
 
         Hashtable<String, String> env = new Hashtable<String, String>();

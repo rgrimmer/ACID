@@ -6,14 +6,11 @@ import javax.ejb.Stateless;
 public class Test implements TestRemote {
 
     public Test() {
-        
     }
-    
+
     @Override
     public String test() {
         System.out.println("OK");
         return "TEST";
     }
-
-  
 }

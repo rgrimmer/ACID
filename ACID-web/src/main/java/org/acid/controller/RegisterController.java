@@ -1,17 +1,21 @@
 package org.acid.controller;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import org.acid.ejb.test.TestRemote;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegisterController {
-
+    
+    @EJB(mappedName = "testEJB")
+    private TestRemote ref;
+    
     @RequestMapping("/register")
     public String register(Model model) {
         return "register";
@@ -27,6 +31,7 @@ public class RegisterController {
         System.out.println(inputEmail);
         System.out.println(inputPassword);
         System.out.println(inputPasswordConfirmation);
+        System.out.println(ref.test());
         ModelAndView mv = new ModelAndView("register");
         mv.addObject("errorMsg", "ERREUR !!!!!!");
         return mv;

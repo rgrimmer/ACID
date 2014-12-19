@@ -36,15 +36,16 @@
                 <configuration>
                     <version>5</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <earSourceExcludes>carol, client-jar</earSourceExcludes>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
         <dependency>
-            <groupId>org</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>ACID-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <type>war</type>
         </dependency>
         <dependency>
