@@ -1,0 +1,111 @@
+<!--
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - JOnAS: Java(TM) Open Application Server
+  - Copyright (C) 2010-2011 Bull S.A.S.
+  - Contact: jonas-team@ow2.org
+  -
+  - This library is free software; you can redistribute it and/or
+  - modify it under the terms of the GNU Lesser General Public
+  - License as published by the Free Software Foundation; either
+  - version 2.1 of the License, or any later version.
+  -
+  - This library is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  - Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public
+  - License along with this library; if not, write to the Free Software
+  - Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+  - USA
+  -
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - $Id: jdbc-ds.xml 21953 2011-12-01 16:14:41Z benoitf $
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+-->
+<datasources xmlns="http://jonas.ow2.org/ns/datasource/1.1">
+
+      <!--                                                         -->
+      <!--  JDBC DATASOURCE XML DEPLOYABLE                         -->
+      <!--  Generates a JDBC RAR for each 'datasource' element     -->
+      <!--                                                         -->
+      <datasource>
+
+        <!--  Datasource configuration                               -->
+        <!--                                                         -->
+        <!--  'name' specifies the jndi name                         -->
+        <!--  'url' Database url                                     -->
+        <!--  'classname' Name of the class implementing             -->
+        <!--   java.sql.Driver, javax.sql.DataSource,                -->
+        <!--   javax.sql.ConnectionPoolDataSource, or                -->
+        <!--   javax.sql.XADataSource interfaces in the JDBC driver  -->
+        <!--  'username' Database user name                          -->
+        <!--  'password' Database password                           -->
+        <!--  'mapper' Name of the JORM mapper                       -->
+        <!--                                                         -->
+        <datasource-configuration>
+            <name>ACIDDB</name>
+            <url>jdbc:mysql://localhost:3306/ACIDDB</url>
+            <classname>com.mysql.jdbc.Driver</classname>
+            <username>acid</username>
+            <password>acid</password>
+            <!-- Same mapper than HSQL -->
+            <mapper>rdb.mysql</mapper>
+        </datasource-configuration>
+
+        <!--  Connection manager configuration                       -->
+        <!--                                                         -->
+        <!--  'connchecklevel' specifies the connection check level  -->
+        <!--     0 : no check                                        -->
+        <!--     1 : check connection still open                     -->
+        <!--     2 : call the test statement before reusing a        -->
+        <!--         connection from the pool                        -->
+        <!--     3: (keep-alive feature) send the test statement on  -->
+        <!--        each connection every pool-sampling-period       -->
+        <!--  'connteststmt' specifies the test statement in         -->
+        <!--   jdbc.connchecklevel = [2,3]                           -->
+        <!--  'connmaxage' specifies nb of minutes a connection can  -->
+        <!--   be kept in the pool. After this time, the connection  -->
+        <!--   will be closed, if minconpool limit has not been      -->
+        <!--   reached.                                              -->
+        <!--  'maxopentime' Deprecated Maximum number of minutes to  -->
+        <!--   keep the managed connection in the pool only outside  -->
+        <!--   transactions. Use instead JNDI JDBC connection leak   -->
+        <!--   detector.                                             -->
+        <!--  'initconpool' Initial size of the managed connection   -->
+        <!--   pool                                                  -->
+        <!--  'minconpool' Minimum size of the managed connection    -->
+        <!--   pool.                                                 -->
+        <!--  'maxconpool' Maximum size of the managed connection    -->
+        <!--   pool.                                                 -->
+        <!--  'pstmtmax' Maximum number of PreparedStatements per    -->
+        <!--   managed connection in the pool. Only needed with the  -->
+        <!--   JDBC RA of JOnAS or another database vendor's RAR.    -->
+        <!--   Value of 0 is unlimited and -1 disables the cache.    -->
+        <!--  'pstmtcachepolicy' Policy for the cache of pstmt.      -->
+        <!--   Possible values are 'List' or 'Map'.                  -->
+        <!--  'maxwaittime' identifies the maximum number of seconds -->
+        <!--   that a waiter will wait for a managed connection.     -->
+        <!--   Default value is 0.                                   -->
+        <!--  'maxwaiters' identifies the maximum number of waiters  -->
+        <!--   for a managed connection. Default value is 0.         -->
+        <!--  'samplingperiod' identifies the number of seconds that -->
+        <!--   will occur between statistics samplings of the pool.  -->
+        <!--   Default is 30 seconds.                                -->
+        <!--                                                         -->
+        <connectionManager-configuration>
+            <connchecklevel>0</connchecklevel>
+            <connteststmt>select count(1) from information_schema.tables</connteststmt>
+            <connmaxage>1440</connmaxage>
+            <maxopentime>60</maxopentime>
+            <initconpool>10</initconpool>
+            <minconpool>10</minconpool>
+            <maxconpool>100</maxconpool>
+            <pstmtmax>100</pstmtmax>
+            <pstmtcachepolicy>Map</pstmtcachepolicy>
+            <maxwaittime>5</maxwaittime>
+            <maxwaiters>100</maxwaiters>
+            <samplingperiod>30</samplingperiod>
+        </connectionManager-configuration>
+    </datasource>
+</datasources>

@@ -8,61 +8,35 @@
     </parent>
 
     <groupId>org</groupId>
-    <artifactId>ACID-web</artifactId>
-    <packaging>war</packaging>
+    <artifactId>ejb-pwhash</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ACID-web</name>
+    <packaging>ejb</packaging>
+    <name>ejb-pwhash</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.1.2.RELEASE</spring.version>
     </properties>
 
     <dependencies>
-        <!-- Servlets -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>javaee</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>5</version>
             <scope>provided</scope>
         </dependency>
-        <!-- JSTL -->
         <dependency>
-            <groupId>jstl</groupId>  
-            <artifactId>jstl</artifactId>  
-            <version>1.2</version>  
+            <groupId>org.ow2.carol</groupId>
+            <artifactId>carol</artifactId>
+            <version>3.0.10</version>
         </dependency>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <!-- EJBs -->
         <dependency>
             <groupId>org.ow2.jonas.assemblies</groupId>
             <artifactId>client-jar</artifactId>
             <version>5.3.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ejb-logger</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ejb-entities</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -84,13 +58,6 @@
                 <version>2.4</version>
                 <configuration>
                     <ejbVersion>3.0</ejbVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <packagingExcludes>WEB-INF/lib/client-jar-5.3.0.jar</packagingExcludes>
                 </configuration>
             </plugin>
         </plugins>

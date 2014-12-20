@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
     <head>
@@ -15,7 +16,7 @@
         <div class="container">
 
             <div class="row text-center">
-                <a href="index.html">
+                <a href="${pageContext.request.contextPath}">
                     <img src="${pageContext.request.contextPath}/resources/imgs/logo.png" class="img-rounded">
                 </a>
             </div>
@@ -38,7 +39,9 @@
 
                 <a id="loginLink" href="${pageContext.request.contextPath}/login" class="btn btn-lg btn-info btn-block">Login</a>
                 
-                <div class="error">${errorMsg}</div>
+                <c:if test="${not empty errorMsg}">
+                    <div id="errorBlock" class="alert alert-danger"><strong>${errorMsg}</strong></div>
+                </c:if>
             </form>
         </div>
     </body>
