@@ -25,7 +25,7 @@ If you are using Bash, you can use the Bash script `auto.sh` to build/clean/depl
 
 Otherwise : 
 - Compile the project using Maven : `mvn clean install`
-- Copy the files `.jar`, `.ear` and `.war` in the folder `deploy` of your JOnAS server.
+- Copy the EAR file in the folder `deploy` of your JOnAS server.
 
 Application
 -----------
