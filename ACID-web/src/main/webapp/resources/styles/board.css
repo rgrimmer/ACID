@@ -33,3 +33,26 @@ hr {
 .panel-primary:hover {
 	background-color: #eee;
 }
+
+.draggable {
+	box-shadow: 8px 8px 12px #aaa;
+	background-color: #5699d4;
+	color: #FFF;
+	font-weight: bold;
+	margin-bottom: 15px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 2px;
+}
+
+.draggable:hover {
+	background-color: #ea4f0b;
+}
+
+.draggable span {
+	visibility: hidden;
+}
+
+.draggable:hover span {
+	visibility: visible;
+}
