@@ -2,8 +2,7 @@ package org.acid.controller;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import org.acid.ejb.entitymanager.EntityManager;
-import org.acid.ejb.entitymanager.EntityManagerImpl;
+import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,7 @@ public class NewBoardController {
     private Logger logger;
     
     @EJB(mappedName = "entityManager")
-    private EntityManager entityManager;
+    private ACIDEntityManager entityManager;
 
     @RequestMapping("/newBoard")
     public String register(Model model) {

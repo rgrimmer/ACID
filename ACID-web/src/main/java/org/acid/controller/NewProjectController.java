@@ -2,8 +2,7 @@ package org.acid.controller;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import org.acid.ejb.entitymanager.EntityManager;
-import org.acid.ejb.entitymanager.EntityManagerImpl;
+import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,7 @@ public class NewProjectController {
     private Logger logger;
     
     @EJB(mappedName = "entityManager")
-    private EntityManager entityManager;
+    private ACIDEntityManager entityManager;
 
     @RequestMapping("/newProject")
     public String register(Model model) {
@@ -36,7 +35,7 @@ public class NewProjectController {
         if(inputProjectName.length() > MAX_PROJECT_NAME_LENGTH){
             mv.addObject("errorMsg", "Project name  must be less than 256 caracters");
             return mv;
-        }        
+        }
         mv = new ModelAndView("newBoard");
         return (mv);
         

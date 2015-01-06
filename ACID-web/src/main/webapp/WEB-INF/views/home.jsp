@@ -22,11 +22,10 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/">ACIID</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/">ACID</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<div class="navbar-form navbar-right">
-                                        <p class="navbar-brand">${sessionScope.user.name}</p>
 					<a id="logoutBtn" class="btn btn-danger" href="${pageContext.request.contextPath}/logout">Logout</a>
 				</div>
 			</div>
@@ -36,40 +35,6 @@
 	<div class="board-title">
             ${projets}
 	</div>
-
-	<div class="row">
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">ACID : Common</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">ACID : Sprint 1</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">ACID : Sprint 2</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">ACID : Sprint 3</h3>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	<hr>
 
 	<script
 		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

@@ -87,7 +87,7 @@ public class Type implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Type)) {
+        if (idType == null || object == null || !(object instanceof Type)) {
             return false;
         }
         Type other = (Type) object;

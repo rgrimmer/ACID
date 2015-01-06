@@ -1,19 +1,24 @@
 package org.acid.ejb.entitymanager;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.logger.Logger;
 import org.acid.ejb.pwhash.PasswordHash;
 
 @Stateless(mappedName = "entityManager")
-public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManager {
+public class ACIDEntityManagerImpl implements ACIDEntityManager {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "ACID_entities")
     private EntityManager em;
 
     @EJB(mappedName = "pwhash")
@@ -22,21 +27,18 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
     @EJB(mappedName = "logger")
     private Logger logger;
 
-    public EntityManagerImpl() {
-    }
-
     /*
      ***********************************
      * Users methods
      ***********************************
      */
     @Override
-    public int createUser(User user) {
-        //user.setPassword(pwHash.hash(user.getPassword()));
+    public User createUser(String email, String name, String password) {
+        String hashPassword = pwHash.hash(password);
+        User user = new User(email, name, hashPassword);
         em.persist(user);
-        em.flush();
-        logger.info("EJB-entities", "User '" + user.getName() + "' created");
-        return user.getIdUser();
+        logger.info("EJB-entities", "User " + user.getIdUser() + " '" + user.getName() + "' (" + user.getEmail() + ") persisted in DB");
+        return user;
     }
 
     @Override
@@ -54,6 +56,17 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
     @Override
     public boolean isGoodPassword(String password, User user) {
         return pwHash.equals(password, user.getPassword());
+    }
+    
+    /*
+     ***********************************
+     * Boards methods
+     ***********************************
+     */
+    @Override
+    public Collection<Board> getBoardsByIdProject(int id) {
+        Project p = em.find(Project.class, id);
+        return p.getBoardCollection();
     }
 
     /*
