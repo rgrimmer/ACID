@@ -2,6 +2,7 @@ package org.acid.controller;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.entitymanager.EntityManager;
 import org.acid.ejb.logger.Logger;
@@ -31,6 +32,7 @@ public class LoginController {
                                   @RequestParam(value = "inputEmail", required = true) String inputEmail,
                                   @RequestParam(value = "inputPassword", required = true) String inputPassword) {
         User user = entityManager.getUserByEmailAddress(inputEmail);
+        HttpSession session = request.getSession();
         if (user == null) {
             logger.debug("LoginController", "User does not exist");
             ModelAndView mv = new ModelAndView("login");
@@ -39,11 +41,14 @@ public class LoginController {
         }
         if (!entityManager.isGoodPassword(inputPassword, user)) {
             logger.debug("LoginController", "Bad password");
+            session.setAttribute("user", null);
             ModelAndView mv = new ModelAndView("login");
             mv.addObject("errorMsg", "Invalid password");
             return mv;
         }
-        logger.debug("LoginController", "User '" + user.getName() + "' connected");
+        logger.debug("LoginController", "User '" + user.getName() + "' connected");        
+        session.setAttribute("user", user);
+        logger.debug("LoginController", "session created for user : '" + ((User)session.getAttribute("user")).getName() + "'");
         return new ModelAndView("redirect:/");
     }
 }
