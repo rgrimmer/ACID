@@ -16,15 +16,15 @@ hs_err_pid*
 #*#
 
 # Output directory
-/ejb-test/target/
 /ACID-web/target/
 /ACID-ear/target/
+/ejb-logger/target/
+/ejb-entities/target/
+/ejb-pwhash/target/
+
 
 # Netbeans configurations
 nb-configuration.xml
 
 # Ignore the bash script as people need to customize it.
 auto.sh
-/ejb-entities/target/
-/ejb-pwhash/target/
-/ejb-logger/target/

@@ -1,11 +1,10 @@
 package org.acid.controller;
 
-import java.util.Collection;
 import javax.ejb.EJB;
 import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.entities.Board;
-import org.acid.ejb.entitymanager.EntityManager;
+import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     @EJB(mappedName = "entityManager")
-    private EntityManager entityManager;
+    private ACIDEntityManager entityManager;
 
     @EJB(mappedName = "logger")
     private Logger logger;
@@ -33,7 +32,7 @@ public class HomeController {
         User user = entityManager.getUserById(id);
         ModelAndView mv = new ModelAndView("home");
         String listProject = "";
-        
+
         for (Project project : user.getProjectCollection()) {
             listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"></div>";
 
@@ -42,7 +41,7 @@ public class HomeController {
                         + board.getName()
                         + "</h3></div></div></div>";
             }
-            
+
             listProject += "<hr>";
         }
         mv.addObject("projets", listProject);

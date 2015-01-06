@@ -21,13 +21,13 @@
                 </a>
             </div>
 
-                <form class="form-register" role="form" method="POST" action="${pageContext.request.contextPath}/register">
+            <form class="form-register" role="form" method="POST" action="${pageContext.request.contextPath}/register">
                 <h2 class="form-register-heading">Register</h2>
                 <label for="inputUsername" class="sr-only">Username</label>
-                <input id="inputUsername" name="inputUsername" type="username" class="form-control" placeholder="Username" required autofocus>
+                <input id="inputUsername" name="inputUsername" type="username" class="form-control" placeholder="Username" value="${inputUsername}" required autofocus>
 
                 <label for="inputEmail" class="sr-only">Email address</label>
-                <input id="inputEmail" name="inputEmail" type="email" class="form-control" placeholder="Email address" required>
+                <input id="inputEmail" name="inputEmail" type="email" class="form-control" placeholder="Email address" value="${inputEmail}" required>
 
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input id="inputPassword" name="inputPassword" type="password" class="form-control" placeholder="Password" required>
@@ -38,10 +38,10 @@
                 <button id="submitBtn" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 
                 <a id="loginLink" href="${pageContext.request.contextPath}/login" class="btn btn-lg btn-info btn-block">Login</a>
-                
+
                 <c:if test="${not empty errorMsg}">
                     <div id="errorBlock" class="alert alert-danger"><strong>${errorMsg}</strong></div>
-                </c:if>
+                        </c:if>
             </form>
         </div>
     </body>

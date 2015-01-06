@@ -16,9 +16,9 @@ import org.acid.ejb.logger.Logger;
 import org.acid.ejb.pwhash.PasswordHash;
 
 @Stateless(mappedName = "entityManager")
-public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManager {
+public class ACIDEntityManagerImpl implements ACIDEntityManager {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "ACID_entities")
     private EntityManager em;
 
     @EJB(mappedName = "pwhash")
@@ -27,21 +27,18 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
     @EJB(mappedName = "logger")
     private Logger logger;
 
-    public EntityManagerImpl() {
-    }
-
     /*
      ***********************************
      * Users methods
      ***********************************
      */
     @Override
-    public int createUser(User user) {
-        //user.setPassword(pwHash.hash(user.getPassword()));
+    public User createUser(String email, String name, String password) {
+        String hashPassword = pwHash.hash(password);
+        User user = new User(email, name, hashPassword);
         em.persist(user);
-        em.flush();
-        logger.info("EJB-entities", "User '" + user.getName() + "' created");
-        return user.getIdUser();
+        logger.info("EJB-entities", "User " + user.getIdUser() + " '" + user.getName() + "' (" + user.getEmail() + ") persisted in DB");
+        return user;
     }
 
     @Override

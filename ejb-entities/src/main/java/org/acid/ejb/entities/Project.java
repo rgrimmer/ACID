@@ -120,7 +120,7 @@ public class Project implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Project)) {
+        if (idProject == null || object == null || !(object instanceof Project)) {
             return false;
         }
         Project other = (Project) object;

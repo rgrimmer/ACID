@@ -6,7 +6,7 @@ import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Task;
 import org.acid.ejb.entities.User;
-import org.acid.ejb.entitymanager.EntityManager;
+import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class BoardController {
 
     @EJB(mappedName = "entityManager")
-    private EntityManager entityManager;
+    private ACIDEntityManager entityManager;
 
     @EJB(mappedName = "logger")
     private Logger logger;
@@ -54,12 +54,12 @@ public class BoardController {
 
     @RequestMapping(value = "/board", method = RequestMethod.POST)
     public ModelAndView boardPost(HttpServletRequest request,
-            @RequestParam(value = "id", required = true) String id,
-            @RequestParam(value = "data", required = true) String data) {
+                                  @RequestParam(value = "id", required = true) String id,
+                                  @RequestParam(value = "data", required = true) String data) {
         // TODO: add to db
-        
+
         ModelAndView mv = new ModelAndView("board");
-        mv.addObject("infoMsg", "id="+id+" data="+data);
+        mv.addObject("infoMsg", "id=" + id + " data=" + data);
         return mv;
     }
 

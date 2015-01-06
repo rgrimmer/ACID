@@ -7,19 +7,19 @@ import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.User;
 
 @Remote
-public interface EntityManager {
+public interface ACIDEntityManager {
 
     /*
      ***********************************
      * Users methods
      ***********************************
      */
-    int createUser(User user);
+    User createUser(String email, String name, String password);
 
     User getUserById(int id);
 
     User getUserByEmailAddress(String emailAddress);
-    
+
     boolean isGoodPassword(String password, User user);
     
     

@@ -131,7 +131,7 @@ public class Board implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Board)) {
+        if (idBoard == null || object == null || !(object instanceof Board)) {
             return false;
         }
         Board other = (Board) object;

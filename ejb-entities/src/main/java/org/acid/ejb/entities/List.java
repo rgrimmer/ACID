@@ -102,7 +102,7 @@ public class List implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof List)) {
+        if (idList == null || object == null || !(object instanceof List)) {
             return false;
         }
         List other = (List) object;
