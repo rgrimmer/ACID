@@ -68,6 +68,15 @@ public class Project implements Serializable {
         this.idProject = idProject;
         this.name = name;
     }
+    
+    public Project(String name, User owner) {
+        this.idOwner = owner;
+        this.name = name;
+    }
+    
+    public boolean addBoard(Board b){
+        return boardCollection.add(b);
+    }
 
     public Integer getIdProject() {
         return idProject;

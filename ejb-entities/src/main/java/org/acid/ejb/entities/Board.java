@@ -71,6 +71,12 @@ public class Board implements Serializable {
         this.idBoard = idBoard;
         this.name = name;
     }
+    
+    public Board(String name, Type type, Project project) {    
+        this.name = name;
+        this.idType = type;
+        this.idProject = project;
+    }
 
     public Integer getIdBoard() {
         return idBoard;

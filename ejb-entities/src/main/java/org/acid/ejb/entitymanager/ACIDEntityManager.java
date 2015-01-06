@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import javax.ejb.Remote;
 import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.Project;
+import org.acid.ejb.entities.Type;
 import org.acid.ejb.entities.User;
 
 @Remote
@@ -29,8 +31,25 @@ public interface ACIDEntityManager {
      ***********************************
      */
     
+    Board createBoard(String name, Type type, int idProject);
+    
     Board getBoardById(int id);
     
     Collection<Board> getBoardsByIdProject(int id);
     
+    /*
+     ***********************************
+     * Project methods
+     ***********************************
+     */
+    Project createProject(String name, User owner);
+    Project getProjectById(int idProject);
+    
+    /*
+     ***********************************
+     * Type methods
+     ***********************************
+     */
+    
+    Type getTypeByLabel(String label);
 }

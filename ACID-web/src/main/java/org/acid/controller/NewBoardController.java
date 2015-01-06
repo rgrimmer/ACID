@@ -2,6 +2,8 @@ package org.acid.controller;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.acid.ejb.entities.User;
 import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,10 @@ public class NewBoardController {
     private ACIDEntityManager entityManager;
 
     @RequestMapping("/newBoard")
-    public String register(Model model) {
+    public String register(Model model, HttpSession request) {
+        if (((User) request.getAttribute("user")) == null) {
+            return "login";
+        }
         return "newBoard";
     }
 
