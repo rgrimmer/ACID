@@ -33,7 +33,7 @@
                 <button id="submitBtn" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 
                 <a id="registerBtn" href="${pageContext.request.contextPath}/register" class="btn btn-lg btn-info btn-block">Create an account</a>
-                
+
                 <c:if test="${not empty errorMsg}">
                     <div id="errorBlock" class="alert alert-danger"><strong>${errorMsg}</strong></div>
                 </c:if>
