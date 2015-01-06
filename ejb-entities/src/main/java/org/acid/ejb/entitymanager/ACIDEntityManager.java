@@ -29,6 +29,8 @@ public interface ACIDEntityManager {
      ***********************************
      */
     
+    Board getBoardById(int id);
+    
     Collection<Board> getBoardsByIdProject(int id);
     
 }
