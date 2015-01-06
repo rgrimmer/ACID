@@ -17,6 +17,7 @@
         <module>ejb-entities</module>
         <module>ACID-web</module>
         <module>ACID-ear</module>
-    </modules>
+        <module>ejb-sonarTasks</module>
+  </modules>
   
 </project>
