@@ -6,6 +6,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,19 +53,22 @@ public class User implements Serializable {
     @Size(min = 1, max = 128)
     @Column(name = "password")
     private String password;
-    @ManyToMany(mappedBy = "userCollection")
+    @ManyToMany(mappedBy = "userCollection",fetch = FetchType.EAGER)
     private Collection<Project> projectCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOwner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOwner",fetch = FetchType.EAGER)
     private Collection<Project> projectCollection1;
 
     public User() {
+        System.out.println("User(0) Call");
     }
 
     public User(Integer idUser) {
+        System.out.println("User(1) Call");
         this.idUser = idUser;
     }
 
     public User(Integer idUser, String email, String name, String password) {
+        System.out.println("User(3) Call");
         this.idUser = idUser;
         this.email = email;
         this.name = name;
@@ -109,6 +113,7 @@ public class User implements Serializable {
     }
 
     public void setProjectCollection(Collection<Project> projectCollection) {
+        System.out.println("setProject Call");
         this.projectCollection = projectCollection;
     }
 

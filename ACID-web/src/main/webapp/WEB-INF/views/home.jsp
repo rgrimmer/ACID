@@ -34,37 +34,7 @@
 	</nav>
 
 	<div class="board-title">
-		TRUC <span class="glyphicon glyphicon-folder-open"></span>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">TRUC : Common</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">TRUC : Sprint 1</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel board">
-				<div class="panel-heading">
-					<h3 class="panel-title">TRUC : Sprint 2</h3>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<hr>
-
-	<div class="board-title">
-		ACID <span class="glyphicon glyphicon-folder-open"></span>
+            ${projets}
 	</div>
 
 	<div class="row">

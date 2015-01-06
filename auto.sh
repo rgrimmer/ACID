@@ -1,8 +1,9 @@
 #!/bin/bash
-JONASDIR="/home/remy/Documents/jonas-full-5.3.0"
+JONASDIR="/home/hadryx/jonas/jonas-full-5.3.0"
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"
+SCP="scp "
 SEP="="
 MAX_LINE=80
 ERR=0
@@ -25,6 +26,7 @@ help() {
     $ECHO " d\tDeploy the project"
     $ECHO " cbd\tClean, build and deploy the project"
     $ECHO " h\tDisplay this help"
+	$ECHO " dd\tDistant Deploy"
 }
 
 process_string() {
@@ -138,6 +140,42 @@ deploy() {
     print_title "Deployment finished"
 }
 
+deployDistantFile() {
+	$SCP $1 "$USER@hadrien-belkebir.fr:/var/JOnAS/deploy" 2>/dev/null
+	ERR=$?
+	if [[ $ERR -eq 0 ]]; then
+	print_success "Deployed on production: $1"
+    else
+	print_err "Could not deployed on production : $1"
+    fi
+}
+
+distant_deploy() {
+	print_title "Distant Deploying..."
+	local nb=0
+	deployDistantFile ACID-ear/target/*.ear
+	nb=$((nb+1))
+#    for f in *; do
+#	if [[ -d "$f/$TARGETDIR" ]]; then
+#	    for file in $(ls -1 $f/$TARGETDIR/*.{jar,war,ear} 2>/dev/null); do
+#		deployFile "$file"
+#		local deployerr=$ERR
+#		if [[ $deployerr -eq 0 ]]; then
+#		    nb=$((nb+1))
+#		else
+#		    ERR=1
+#		fi
+#	    done
+#	fi
+ #   done
+    if [[ $nb -gt 0 ]]; then
+	print_success "Deployed: $nb files"
+    elif [[ $ERR -eq 0  ]]; then
+	print_err "Nothing to deploy. Build the project before deploying it."
+    fi
+    print_title "Deployment finished"
+}
+
 abort_if_err() {
     if [[ $ERR -ne 0 ]]; then
 	print_err "ABORTED"
@@ -194,6 +232,9 @@ case "$1" in
 	;;
     "h")
 	help
+	;;
+	"dd")
+	distant_deploy
 	;;
     *)
 	help
