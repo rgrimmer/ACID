@@ -33,7 +33,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "id_user")
     private Integer idUser;
@@ -73,6 +73,10 @@ public class User implements Serializable {
         this.email = email;
         this.name = name;
         this.password = password;
+    }
+
+    public User(String email, String name, String password) {
+        this(null, email, name, password);
     }
 
     public Integer getIdUser() {
@@ -135,7 +139,7 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof User)) {
+        if (idUser == null || object == null || !(object instanceof User)) {
             return false;
         }
         User other = (User) object;

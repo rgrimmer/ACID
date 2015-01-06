@@ -6,6 +6,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +22,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "Board")
@@ -45,6 +48,7 @@ public class Board implements Serializable {
     @JoinTable(name = "Board_list", joinColumns = {
         @JoinColumn(name = "id_board", referencedColumnName = "id_board")}, inverseJoinColumns = {
         @JoinColumn(name = "id_list", referencedColumnName = "id_list")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     private Collection<List> listCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBoard")
@@ -127,7 +131,7 @@ public class Board implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Board)) {
+        if (idBoard == null || object == null || !(object instanceof Board)) {
             return false;
         }
         Board other = (Board) object;

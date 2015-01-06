@@ -1,0 +1,48 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+.form-newProject {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-newProject .form-newProject-heading,
+.form-newProject .checkbox {
+  margin-bottom: 10px;
+}
+.form-newProject .checkbox {
+  font-weight: normal;
+}
+.form-newProject .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-newProject .form-control:focus {
+  z-index: 2;
+}
+.form-newProject input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-newProject input[type="password"] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#submitBtn {
+  margin-top: 10px;
+}
+
+#loginLink {
+    margin-top: 15px;
+}
+#errorBlock {
+    margin-top: 15px;
+}

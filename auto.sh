@@ -1,5 +1,5 @@
 #!/bin/bash
-JONASDIR="/home/hadryx/jonas/jonas-full-5.3.0"
+JONASDIR="/home/.../jonas-full-5.3.0" # TODO: change path
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"
@@ -119,19 +119,6 @@ deploy() {
     local nb=0
     deployFile ACID-ear/target/*.ear
     nb=$((nb+1))
-#    for f in *; do
-#	if [[ -d "$f/$TARGETDIR" ]]; then
-#	    for file in $(ls -1 $f/$TARGETDIR/*.{jar,war,ear} 2>/dev/null); do
-#		deployFile "$file"
-#		local deployerr=$ERR
-#		if [[ $deployerr -eq 0 ]]; then
-#		    nb=$((nb+1))
-#		else
-#		    ERR=1
-#		fi
-#	    done
-#	fi
- #   done
     if [[ $nb -gt 0 ]]; then
 	print_success "Deployed: $nb files"
     elif [[ $ERR -eq 0  ]]; then
@@ -151,23 +138,10 @@ deployDistantFile() {
 }
 
 distant_deploy() {
-	print_title "Distant Deploying..."
-	local nb=0
-	deployDistantFile ACID-ear/target/*.ear
-	nb=$((nb+1))
-#    for f in *; do
-#	if [[ -d "$f/$TARGETDIR" ]]; then
-#	    for file in $(ls -1 $f/$TARGETDIR/*.{jar,war,ear} 2>/dev/null); do
-#		deployFile "$file"
-#		local deployerr=$ERR
-#		if [[ $deployerr -eq 0 ]]; then
-#		    nb=$((nb+1))
-#		else
-#		    ERR=1
-#		fi
-#	    done
-#	fi
- #   done
+    print_title "Distant Deploying..."
+    local nb=0
+    deployDistantFile ACID-ear/target/*.ear
+    nb=$((nb+1))
     if [[ $nb -gt 0 ]]; then
 	print_success "Deployed: $nb files"
     elif [[ $ERR -eq 0  ]]; then

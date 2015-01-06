@@ -28,6 +28,16 @@
         
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/newProject/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/newBoard/*</url-pattern>
+    </servlet-mapping>
+        
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
         <url-pattern>/register/*</url-pattern>
     </servlet-mapping>
   
@@ -40,5 +50,4 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/home/*</url-pattern>
     </servlet-mapping>
-        
 </web-app>

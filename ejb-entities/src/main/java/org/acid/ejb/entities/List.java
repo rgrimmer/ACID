@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "List")
@@ -41,6 +43,7 @@ public class List implements Serializable {
     private String label;
     @ManyToMany(mappedBy = "listCollection")
     private Collection<Board> boardCollection;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idList")
     private Collection<Task> taskCollection;
 
@@ -99,7 +102,7 @@ public class List implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof List)) {
+        if (idList == null || object == null || !(object instanceof List)) {
             return false;
         }
         List other = (List) object;

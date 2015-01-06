@@ -125,7 +125,7 @@ public class Task implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Task)) {
+        if (idTask == null || object == null || !(object instanceof Task)) {
             return false;
         }
         Task other = (Task) object;

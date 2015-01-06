@@ -21,14 +21,41 @@
                 ev.preventDefault();
 
                 var data = ev.dataTransfer.getData("text");
-                if (ev.target.id == "draggableContainer") {
+                if (ev.target.id.substring(0, 18) === "draggableContainer") {
                     ev.target.appendChild(document.getElementById(data));
-                } else if (ev.target.id.substring(0, 13) == "draggableItem") {
+                    addToDb(ev.target.id, data);
+                } else if (ev.target.id.substring(0, 13) === "draggableItem") {
                     $(event.target).parent().append(document.getElementById(data));
-                } else {
-                    alert(ev.target.id);
+                    addToDb($(event.target).parent().attr('id'), data);
+                }
+            }
+
+            function addToDb(idDiv, dataDiv) {
+                //post("${pageContext.request.contextPath}/board", {id:idDiv, data:document.getElementById(dataDiv).textContent});
+            }
+
+            function post(path, params, method) {
+                method = method || "post"; // Set method to post by default if not specified.
+
+                // The rest of this code assumes you are not using a library.
+                // It can be made less wordy if you use one.
+                var form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+
+                        form.appendChild(hiddenField);
+                    }
                 }
 
+                document.body.appendChild(form);
+                form.submit();
             }
         </script>
     </head>
@@ -54,78 +81,16 @@
         </nav>
 
         <div class="row">
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">To do</h3>
-                    </div>
-                    <div id="draggableContainer" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)">
-                        <div id="draggableItem1" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Create jsp page. <span class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div id="draggableItem2" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Create base classes (Owner Developper, Developper, Card, Boards,
-                            projects) <span class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div id="draggableItem3" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Create Database (diagram is already draw) <span
-                                class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div id="draggableItem4" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Test4 <span class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Doing</h3>
-                    </div>
-                    <div id="draggableContainer" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Done</h3>
-                    </div>
-                    <div id="draggableContainer" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Done Done</h3>
-                    </div>
-                    <div id="draggableContainer" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)"></div>
-                </div>
-            </div>
+            ${lists}
+        </div>
 
-        </div>
-        <!--
-        <div class="row">
-                <div class="col-sm-3">
-                        <form>
-                                <span class="placeholder"> Add a list...</span> <input type="text"
-                                        class="list-name-input" name="name" placeholder="Add a list..."
-                                        autocomplete="off">
-                                <div class="test">
-                                        <input type="submit" class="btn btn-primary" value="Save">
-                                </div>
-                        </form>
-                </div>
-        </div>
-        -->
-        <script
-        src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    </body>
+    <!--
+    <c:if test="${not empty infoMsg}">
+        <div class="alert alert-danger"><strong>${infoMsg}</strong></div>
+    </c:if>
+    -->
+    
+    <script
+    src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
 </html>
