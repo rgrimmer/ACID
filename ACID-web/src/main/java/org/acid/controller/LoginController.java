@@ -4,7 +4,7 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.acid.ejb.entities.User;
-import org.acid.ejb.entitymanager.EntityManager;
+import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
     @EJB(mappedName = "entityManager")
-    private EntityManager entityManager;
+    private ACIDEntityManager entityManager;
 
     @EJB(mappedName = "logger")
     private Logger logger;
@@ -36,14 +36,14 @@ public class LoginController {
         if (user == null) {
             logger.debug("LoginController", "User does not exist");
             ModelAndView mv = new ModelAndView("login");
-            mv.addObject("errorMsg", "There isn't an account for this email");
+            mv.addObject("errorMsg", "There isn't an account for this email.");
             return mv;
         }
         if (!entityManager.isGoodPassword(inputPassword, user)) {
             logger.debug("LoginController", "Bad password");
             session.setAttribute("user", null);
             ModelAndView mv = new ModelAndView("login");
-            mv.addObject("errorMsg", "Invalid password");
+            mv.addObject("errorMsg", "Invalid password.");
             return mv;
         }
         logger.debug("LoginController", "User '" + user.getName() + "' connected");        
