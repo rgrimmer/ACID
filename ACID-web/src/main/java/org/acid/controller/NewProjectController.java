@@ -27,21 +27,29 @@ public class NewProjectController {
     private ACIDEntityManager entityManager;
 
     @RequestMapping("/newProject")
-    public String register(Model model, HttpSession request) {
-        if (((User) request.getAttribute("user")) == null) {
-            return "login";
+    public String register(Model model, HttpSession session) {
+        if (((User) session.getAttribute("user")) == null) {
+            return "redirect:/login";
         }
         return "newProject";
     }
 
     @RequestMapping(value = "/newProject", method = RequestMethod.POST)
-    public ModelAndView registerPost(HttpServletRequest request,
-            @RequestParam(value = "inputProjectName", required = true) String inputProjectName) {
-        ModelAndView mv = new ModelAndView("newProject");
+    public ModelAndView registerPost(HttpSession session,
+                                     HttpServletRequest request,
+                                     @RequestParam(value = "inputProjectName", required = true) String inputProjectName) {
         if (inputProjectName.length() > MAX_PROJECT_NAME_LENGTH) {
-            mv.addObject("errorMsg", "Project name  must be less than 256 caracters");
+            ModelAndView mv = new ModelAndView("newProject");
+            mv.addObject("errorMsg", "Project name's length must be less than " + MAX_PROJECT_NAME_LENGTH + " caracters.");
             return mv;
         }
+        User user = (User) session.getAttribute("user");
+        if (entityManager.getProjectByNameAndOwner(inputProjectName, user) != null) {
+            ModelAndView mv = new ModelAndView("newProject");
+            mv.addObject("errorMsg", "You already have a project named \"" + inputProjectName + "\".");
+            return mv;
+        }
+
         Project project = null;
         try {
             project = entityManager.createProject(inputProjectName, ((User) request.getSession().getAttribute("user")));
@@ -49,13 +57,11 @@ public class NewProjectController {
             logger.error("NewProjectController", "Could not persist project", ex);
         }
         if (project == null) {
-            logger.error("NewProjectController", "Could not insert the project in the DB");
+            logger.error("NewProjectController", "Could not insert the project in the DB.");
+            ModelAndView mv = new ModelAndView("newProject");
             mv.addObject("errorMsg", "An error occurred during creating new project.");
             return mv;
         }
-
-        mv = new ModelAndView("redirect:/home");
-        return (mv);
-
+        return new ModelAndView("redirect:/home");
     }
 }

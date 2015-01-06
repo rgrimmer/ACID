@@ -27,7 +27,7 @@ public class NewBoardController {
     @RequestMapping("/newBoard")
     public String register(Model model, HttpSession request) {
         if (((User) request.getAttribute("user")) == null) {
-            return "login";
+            return "redirect:/login";
         }
         return "newBoard";
     }

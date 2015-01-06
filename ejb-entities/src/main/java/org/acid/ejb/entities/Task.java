@@ -134,7 +134,7 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "org.acid.ejb.entities.Task[ idTask=" + idTask + " ]";
+        return "Task[id = " + idBoard + "]";
     }
 
 }

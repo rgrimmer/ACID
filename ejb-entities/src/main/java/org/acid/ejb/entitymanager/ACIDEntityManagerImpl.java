@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.Project;
+import org.acid.ejb.entities.Task;
 import org.acid.ejb.entities.Type;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.logger.Logger;
@@ -63,17 +64,6 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
      ***********************************
      */
     @Override
-    public Board createBoard(String name, Type type, int idProject) {
-        Project project = getProjectById(idProject);
-        if (project == null) {
-            return null;
-        }
-        Board board = new Board(name, type, project);
-        em.persist(board);
-        return board;
-    }
-
-    @Override
     public Board getBoardById(int id) {
         return em.find(Board.class, id);
     }
@@ -84,6 +74,18 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         return (p == null) ? null : p.getBoardCollection();
     }
 
+    public Board addBoardToProject(Project project, String boardName, String boardLabel) {
+        Type type = getTypeByLabel(boardLabel);
+        if (type == null) {
+            logger.error("EJB-entities", "Type \"" + "\" does not exist. Board \"" + boardName + "\" not created.");
+            return null;
+        }
+        Board board = new Board(boardName, type, project);
+        em.persist(board);
+        logger.info("EJB-entities", "Board \"" + boardName + "\" added to project \"" + project.getName() + "\"");
+        return board;
+    }
+
     /*
      ***********************************
      * Project methods
@@ -92,26 +94,31 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     @Override
     public Project createProject(String name, User owner) {
         Project project = new Project(name, owner);
-        Board backlog = new Board("Backlog", getTypeByLabel("Backlog"), project);
-        logger.info("EJB-entities", "BOARD  " + backlog.getName());
-        project.addBoard(backlog);
-        project.addBoard(new Board("BugFix", getTypeByLabel("BugFix"), project));
-        project.addBoard(new Board("Sprint 1", getTypeByLabel("Sprint"), project));
         em.persist(project);
-        logger.info("EJB-entities", "User " + project.getIdProject() + " '" + project.getName() + "' (" + project.getIdOwner() + ") persisted in DB");
+        logger.info("EJB-entities", "Project " + project.getIdProject() + " '" + project.getName() + "' (user=" + project.getIdOwner().getIdUser() + ") persisted in DB");
+        addBoardToProject(project, "Backlog", "Backlog");
+        addBoardToProject(project, "Bug report", "BugFix");
+        addBoardToProject(project, "Sprint 1", "Sprint");
         return project;
     }
 
     public Project getProjectById(int idProject) {
         return em.find(Project.class, idProject);
     }
-    
+
+    @Override
+    public Project getProjectByNameAndOwner(String name, User user) {
+        Query query = em.createNamedQuery("Project.findByNameAndOwner")
+                .setParameter("name", name)
+                .setParameter("owner", user);
+        return (Project) getSingleResultOrNull(query);
+    }
+
     /*
      ***********************************
-     * Project methods
+     * Type methods
      ***********************************
      */
-    
     @Override
     public Type getTypeByLabel(String label) {
         Query query = em.createNamedQuery("Type.findByLabel")
