@@ -31,7 +31,7 @@
             }
 
             function addToDb(idDiv, dataDiv) {
-                post("${pageContext.request.contextPath}/board", {id:idDiv, data:document.getElementById(dataDiv).textContent});
+                //post("${pageContext.request.contextPath}/board", {id:idDiv, data:document.getElementById(dataDiv).textContent});
             }
 
             function post(path, params, method) {
@@ -81,82 +81,15 @@
         </nav>
 
         <div class="row">
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">To do</h3>
-                    </div>
-                    <div id="draggableContainerTodo" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)">
-                        <div id="draggableItem1" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Create jsp page. <span class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div id="draggableItem2" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Create base classes (Owner Developper, Developper, Card, Boards,
-                            projects) <span class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div id="draggableItem3" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Create Database (diagram is already draw) <span
-                                class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div id="draggableItem4" class="panel-body draggable"
-                             draggable="true" ondragstart="drag(event)">
-                            Test4 <span class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Doing</h3>
-                    </div>
-                    <div id="draggableContainerDoing" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Done</h3>
-                    </div>
-                    <div id="draggableContainerDone" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Done Done</h3>
-                    </div>
-                    <div id="draggableContainerDoneDone" class="panel-body" ondrop="drop(event)"
-                         ondragover="allowDrop(event)"></div>
-                </div>
-            </div>
-
+            ${lists}
         </div>
 
+    <!--
     <c:if test="${not empty infoMsg}">
         <div class="alert alert-danger"><strong>${infoMsg}</strong></div>
     </c:if>
-    
-    <!--
-    <div class="row">
-            <div class="col-sm-3">
-                    <form>
-                            <span class="placeholder"> Add a list...</span> <input type="text"
-                                    class="list-name-input" name="name" placeholder="Add a list..."
-                                    autocomplete="off">
-                            <div class="test">
-                                    <input type="submit" class="btn btn-primary" value="Save">
-                            </div>
-                    </form>
-            </div>
-    </div>
     -->
+    
     <script
     src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>

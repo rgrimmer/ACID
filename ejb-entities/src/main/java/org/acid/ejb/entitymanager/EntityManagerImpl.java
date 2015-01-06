@@ -60,12 +60,18 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
     public boolean isGoodPassword(String password, User user) {
         return pwHash.equals(password, user.getPassword());
     }
-    
+
     /*
      ***********************************
      * Boards methods
      ***********************************
      */
+    @Override
+    public Board getBoardById(int id) {
+        Board b = em.find(Board.class, id);
+        return b;
+    }
+
     @Override
     public Collection<Board> getBoardsByIdProject(int id) {
         Project p = em.find(Project.class, id);
