@@ -1,5 +1,5 @@
 #!/bin/bash
-JONASDIR="/home/hadryx/jonas/jonas-full-5.3.0"
+JONASDIR="/home/remy/Documents/jonas-full-5.3.0"
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"

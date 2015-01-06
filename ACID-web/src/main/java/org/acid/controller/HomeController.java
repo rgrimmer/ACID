@@ -1,5 +1,6 @@
 package org.acid.controller;
 
+import java.util.Collection;
 import javax.ejb.EJB;
 import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.User;
@@ -23,19 +24,21 @@ public class HomeController {
     @RequestMapping("/home")
     public ModelAndView home(Model model) {
         int id = 1;
-        
+
         User user = entityManager.getUserById(id);
         ModelAndView mv = new ModelAndView("home");
         String listProject = "";
-
+        
         for (Project project : user.getProjectCollection()) {
-            listProject += "<div class=\"board-title\">" + project.getName() + "</div>";
+            listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"></div>";
 
-//            for(Board board : project.getBoardCollection()) {
-//            listProject += "<div class=\"col-sm-3\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
-//                    + board.getName()
-//                    + "</h3></div></div></div>";
-//            }
+            for (Board board : project.getBoardCollection()) {
+                listProject += "<div class=\"col-sm-3\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
+                        + board.getName()
+                        + "</h3></div></div></div>";
+            }
+            
+            listProject += "<hr>";
         }
         mv.addObject("projets", listProject);
         return mv;

@@ -1,11 +1,16 @@
 package org.acid.ejb.entitymanager;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.logger.Logger;
 import org.acid.ejb.pwhash.PasswordHash;
@@ -54,6 +59,17 @@ public class EntityManagerImpl implements org.acid.ejb.entitymanager.EntityManag
     @Override
     public boolean isGoodPassword(String password, User user) {
         return pwHash.equals(password, user.getPassword());
+    }
+    
+    /*
+     ***********************************
+     * Boards methods
+     ***********************************
+     */
+    @Override
+    public Collection<Board> getBoardsByIdProject(int id) {
+        Project p = em.find(Project.class, id);
+        return p.getBoardCollection();
     }
 
     /*
