@@ -1,8 +1,6 @@
 package org.acid.ejb.entitymanager;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -55,7 +53,7 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     }
 
     @Override
-    public boolean isGoodPassword(String password, User user) {
+    public boolean isCorrectPassword(String password, User user) {
         return pwHash.equals(password, user.getPassword());
     }
 
