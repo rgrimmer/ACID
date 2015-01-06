@@ -43,12 +43,13 @@ public class LoginController {
             logger.debug("LoginController", "Bad password");
             session.setAttribute("user", null);
             ModelAndView mv = new ModelAndView("login");
+            mv.addObject("inputEmail", inputEmail);
             mv.addObject("errorMsg", "Invalid password.");
             return mv;
         }
-        logger.debug("LoginController", "User '" + user.getName() + "' connected");        
+        logger.debug("LoginController", "User '" + user.getName() + "' connected");
         session.setAttribute("user", user);
-        logger.debug("LoginController", "session created for user : '" + ((User)session.getAttribute("user")).getName() + "'");
+        logger.debug("LoginController", "session created for user : '" + ((User) session.getAttribute("user")).getName() + "'");
         return new ModelAndView("redirect:/");
     }
 }
