@@ -52,7 +52,7 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     }
 
     @Override
-    public boolean isGoodPassword(String password, User user) {
+    public boolean isCorrectPassword(String password, User user) {
         return pwHash.equals(password, user.getPassword());
     }
 

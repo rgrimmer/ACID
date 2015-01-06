@@ -39,7 +39,7 @@ public class LoginController {
             mv.addObject("errorMsg", "There isn't an account for this email.");
             return mv;
         }
-        if (!entityManager.isGoodPassword(inputPassword, user)) {
+        if (!entityManager.isCorrectPassword(inputPassword, user)) {
             logger.debug("LoginController", "Bad password");
             session.setAttribute("user", null);
             ModelAndView mv = new ModelAndView("login");

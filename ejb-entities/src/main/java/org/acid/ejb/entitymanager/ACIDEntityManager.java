@@ -1,7 +1,6 @@
 package org.acid.ejb.entitymanager;
 
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.Remote;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.User;
@@ -20,7 +19,7 @@ public interface ACIDEntityManager {
 
     User getUserByEmailAddress(String emailAddress);
 
-    boolean isGoodPassword(String password, User user);
+    boolean isCorrectPassword(String password, User user);
     
     
     /*
