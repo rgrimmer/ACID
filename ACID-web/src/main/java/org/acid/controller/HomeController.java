@@ -9,6 +9,7 @@ import org.acid.ejb.entitymanager.EntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +23,13 @@ public class HomeController {
     private Logger logger;
 
     @RequestMapping("/home")
+    public String home(Model model, HttpSession request) {
+        if (((User) request.getAttribute("user")) == null) {
+            return "redirect:/login";
+        }
+        return "home";
+    }
+
     public ModelAndView home(Model model) {
         int id = 1;
 
