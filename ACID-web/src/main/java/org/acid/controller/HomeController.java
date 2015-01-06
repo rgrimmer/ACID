@@ -23,14 +23,11 @@ public class HomeController {
     private Logger logger;
 
     @RequestMapping("/home")
-    public String home(Model model, HttpSession request) {
+    public ModelAndView home(Model model, HttpSession request) {
         if (((User) request.getAttribute("user")) == null) {
-            return "redirect:/login";
+            return new ModelAndView("redirect:/login");
         }
-        return "home";
-    }
 
-    public ModelAndView home(Model model) {
         int id = 1;
 
         User user = entityManager.getUserById(id);
