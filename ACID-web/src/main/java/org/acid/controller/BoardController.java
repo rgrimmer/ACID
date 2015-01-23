@@ -26,14 +26,6 @@ public class BoardController {
     @EJB(mappedName = "logger")
     private Logger logger;
 
-//    @RequestMapping("/board")
-//    public String board(Model model, HttpSession request) {
-//        if (((User) request.getAttribute("user")) == null) {
-//            return "redirect:/login";
-//        }
-//        return "board";
-//    }
-
     @RequestMapping("/board")
     public ModelAndView board(Model model) {
         ModelAndView mv = new ModelAndView("board");
