@@ -44,6 +44,15 @@ public interface ACIDEntityManager {
 
     Project getProjectById(int idProject);
     
+    /*
+     ***********************************
+     * Task methods
+     ***********************************
+     */
+    
+    Task createTask(int idTask, String label, String description, int priority);
+    void moveTask(int idTask, int idBoardDest);
+
     Project getProjectByNameAndOwner(String name, User user);
 
     /*
@@ -52,4 +61,5 @@ public interface ACIDEntityManager {
      ***********************************
      */
     Type getTypeByLabel(String label);
+
 }

@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.Task;
 import org.acid.ejb.entities.Type;
@@ -124,6 +125,28 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         Query query = em.createNamedQuery("Type.findByLabel")
                 .setParameter("label", label);
         return (Type) getSingleResultOrNull(query);
+    }
+
+    /*
+     ***********************************
+     * Boards methods
+     ***********************************
+     */
+    
+    @Override
+    public Task createTask(int idTask, String label, String description, int priority) {
+        Task task = new Task(idTask, label, description, priority);
+        em.persist(task);
+        return task;
+    }
+
+    @Override
+    public void moveTask(int idTask, int idList) {
+
+        Task task = em.find(Task.class, idTask);
+        List list = em.find(List.class, idList);
+
+        task.setIdList(list);
     }
 
     /*
