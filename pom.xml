@@ -6,17 +6,18 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>ACID</name>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <modules>
         <module>ejb-logger</module>
         <module>ejb-pwhash</module>
         <module>ejb-entities</module>
+        <module>ejb-jenkinsConnector</module>
         <module>ACID-web</module>
         <module>ACID-ear</module>
     </modules>
-  
+    <!-- 3 SLIDES TECHNIQUE , la veille les sources, présentation commmercial ! -->
 </project>
