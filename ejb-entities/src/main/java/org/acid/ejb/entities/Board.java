@@ -6,7 +6,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -70,6 +69,12 @@ public class Board implements Serializable {
     public Board(Integer idBoard, String name) {
         this.idBoard = idBoard;
         this.name = name;
+    }
+    
+    public Board(String name, Type type, Project project) {    
+        this.name = name;
+        this.idType = type;
+        this.idProject = project;
     }
 
     public Integer getIdBoard() {
@@ -140,7 +145,7 @@ public class Board implements Serializable {
 
     @Override
     public String toString() {
-        return "org.acid.ejb.entities.Board[ idBoard=" + idBoard + " ]";
+        return "Board[id = " + idBoard + ",name=" + name + "]";
     }
 
 }

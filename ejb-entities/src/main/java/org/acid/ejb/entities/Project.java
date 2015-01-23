@@ -6,7 +6,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +30,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NamedQueries({
     @NamedQuery(name = "Project.findAll", query = "SELECT p FROM Project p"),
     @NamedQuery(name = "Project.findByIdProject", query = "SELECT p FROM Project p WHERE p.idProject = :idProject"),
-    @NamedQuery(name = "Project.findByName", query = "SELECT p FROM Project p WHERE p.name = :name")})
+    @NamedQuery(name = "Project.findByName", query = "SELECT p FROM Project p WHERE p.name = :name"),
+    @NamedQuery(name = "Project.findByNameAndOwner", query = "SELECT p FROM Project p WHERE p.name = :name AND p.idOwner = :owner")})
 public class Project implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +66,11 @@ public class Project implements Serializable {
 
     public Project(Integer idProject, String name) {
         this.idProject = idProject;
+        this.name = name;
+    }
+
+    public Project(String name, User owner) {
+        this.idOwner = owner;
         this.name = name;
     }
 
@@ -129,7 +134,7 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return "org.acid.ejb.entities.Project[ idProject=" + idProject + " ]";
+        return "Project[id = " + idProject + ",name=" + name + "]";
     }
 
 }

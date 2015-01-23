@@ -96,7 +96,7 @@ public class Type implements Serializable {
 
     @Override
     public String toString() {
-        return "org.acid.ejb.entities.Type[ idType=" + idType + " ]";
+        return "Type[id = " + idType + ",label=" + label + "]";
     }
 
 }
