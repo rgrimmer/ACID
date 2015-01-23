@@ -2,7 +2,6 @@ package org.acid.ejb.entitymanager;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,7 +9,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Project;
+import org.acid.ejb.entities.Task;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.logger.Logger;
 import org.acid.ejb.pwhash.PasswordHash;
@@ -73,6 +74,28 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     public Collection<Board> getBoardsByIdProject(int id) {
         Project p = em.find(Project.class, id);
         return p.getBoardCollection();
+    }
+
+    /*
+     ***********************************
+     * Boards methods
+     ***********************************
+     */
+    
+    @Override
+    public Task createTask(int idTask, String label, String description, int priority) {
+        Task task = new Task(idTask, label, description, priority);
+        em.persist(task);
+        return task;
+    }
+
+    @Override
+    public void moveTask(int idTask, int idList) {
+
+        Task task = em.find(Task.class, idTask);
+        List list = em.find(List.class, idList);
+
+        task.setIdList(list);
     }
 
     /*

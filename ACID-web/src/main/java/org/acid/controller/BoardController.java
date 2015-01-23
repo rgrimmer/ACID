@@ -36,7 +36,7 @@ public class BoardController {
                             "<div class=\"panel-heading\">" +
                                 "<h3 class=\"panel-title\">"+list.getLabel()+"</h3>" +
                             "</div>" +
-                            "<div id=\"draggableContainerTodo\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
+                            "<div id=\"draggableContainer"+list.getIdList()+"\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
                     
             for (Task task : list.getTaskCollection()) {
                 lists += "<div id=\"draggableItem"+task.getIdTask()+"\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">" +
@@ -53,14 +53,14 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/board", method = RequestMethod.POST)
-    public ModelAndView boardPost(HttpServletRequest request,
-                                  @RequestParam(value = "id", required = true) String id,
-                                  @RequestParam(value = "data", required = true) String data) {
-        // TODO: add to db
+    public ModelAndView boardPost(Model model,
+                                  HttpServletRequest request,
+                                  @RequestParam(value = "idT", required = true) String idTask,
+                                  @RequestParam(value = "idL", required = true) String idList) {
 
-        ModelAndView mv = new ModelAndView("board");
-        mv.addObject("infoMsg", "id=" + id + " data=" + data);
-        return mv;
+        entityManager.moveTask(Integer.parseInt(idTask.substring(13,14)), Integer.parseInt(idList.substring(18,19)));
+        
+        return board(model);
     }
 
 }

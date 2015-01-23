@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.ejb.Remote;
 import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.Task;
 import org.acid.ejb.entities.User;
 
 @Remote
@@ -33,4 +34,12 @@ public interface ACIDEntityManager {
     
     Collection<Board> getBoardsByIdProject(int id);
     
+    /*
+     ***********************************
+     * Task methods
+     ***********************************
+     */
+    
+    Task createTask(int idTask, String label, String description, int priority);
+    void moveTask(int idTask, int idBoardDest);
 }
