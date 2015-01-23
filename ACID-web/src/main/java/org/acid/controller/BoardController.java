@@ -1,6 +1,8 @@
 package org.acid.controller;
 
 import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
+import org.acid.ejb.entities.User;
 import javax.servlet.http.HttpServletRequest;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
@@ -25,30 +27,37 @@ public class BoardController {
     private Logger logger;
 
     @RequestMapping("/board")
+    public String board(Model model, HttpSession request) {
+        if (((User) request.getAttribute("user")) == null) {
+            return "redirect:/login";
+        }
+        return "board";
+    }
+
     public ModelAndView board(Model model) {
         ModelAndView mv = new ModelAndView("board");
         String lists = "";
         Board board = entityManager.getBoardById(2);
-        
+
         for (List list : board.getListCollection()) {
-            lists +=  "<div class=\"col-sm-3\">" +
-                        "<div class=\"panel panel-primary\">" +
-                            "<div class=\"panel-heading\">" +
-                                "<h3 class=\"panel-title\">"+list.getLabel()+"</h3>" +
-                            "</div>" +
-                            "<div id=\"draggableContainer"+list.getIdList()+"\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
-                    
+            lists += "<div class=\"col-sm-3\">"
+                    + "<div class=\"panel panel-primary\">"
+                    + "<div class=\"panel-heading\">"
+                    + "<h3 class=\"panel-title\">" + list.getLabel() + "</h3>"
+                    + "</div>"
+                    + "<div id=\"draggableContainerTodo\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
+
             for (Task task : list.getTaskCollection()) {
-                lists += "<div id=\"draggableItem"+task.getIdTask()+"\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">" +
-                task.getDescription() + "<span class=\"glyphicon glyphicon-pencil\"></span>" +
-                "</div>";
+                lists += "<div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
+                        + task.getDescription() + "<span class=\"glyphicon glyphicon-pencil\"></span>"
+                        + "</div>";
             }
 
             lists += "</div></div></div>";
         }
-                    
+
         mv.addObject("lists", lists);
-        
+
         return mv;
     }
 

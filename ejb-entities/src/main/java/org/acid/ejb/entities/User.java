@@ -53,9 +53,9 @@ public class User implements Serializable {
     @Size(min = 1, max = 128)
     @Column(name = "password")
     private String password;
-    @ManyToMany(mappedBy = "userCollection",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "userCollection", fetch = FetchType.EAGER)
     private Collection<Project> projectCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOwner",fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOwner", fetch = FetchType.EAGER)
     private Collection<Project> projectCollection1;
 
     public User() {
@@ -148,7 +148,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "org.acid.ejb.entities.User[ idUser=" + idUser + " ]";
+        return "User[id = " + idUser + ",email=" + email + "]";
     }
 
 }

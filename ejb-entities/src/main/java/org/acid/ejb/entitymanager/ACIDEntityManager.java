@@ -1,10 +1,11 @@
 package org.acid.ejb.entitymanager;
 
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.Remote;
 import org.acid.ejb.entities.Board;
+import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.Task;
+import org.acid.ejb.entities.Type;
 import org.acid.ejb.entities.User;
 
 @Remote
@@ -21,18 +22,27 @@ public interface ACIDEntityManager {
 
     User getUserByEmailAddress(String emailAddress);
 
-    boolean isGoodPassword(String password, User user);
-    
-    
+    boolean isCorrectPassword(String password, User user);
+
     /*
      ***********************************
      * Board methods
      ***********************************
      */
-    
     Board getBoardById(int id);
-    
+
     Collection<Board> getBoardsByIdProject(int id);
+
+    Board addBoardToProject(Project project, String boardName, String boardLabel);
+
+    /*
+     ***********************************
+     * Project methods
+     ***********************************
+     */
+    Project createProject(String name, User owner);
+
+    Project getProjectById(int idProject);
     
     /*
      ***********************************
@@ -42,4 +52,14 @@ public interface ACIDEntityManager {
     
     Task createTask(int idTask, String label, String description, int priority);
     void moveTask(int idTask, int idBoardDest);
+
+    Project getProjectByNameAndOwner(String name, User user);
+
+    /*
+     ***********************************
+     * Type methods
+     ***********************************
+     */
+    Type getTypeByLabel(String label);
+
 }

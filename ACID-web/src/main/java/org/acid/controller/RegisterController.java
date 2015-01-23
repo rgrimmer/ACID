@@ -91,7 +91,7 @@ public class RegisterController {
         }
 
         logger.info("RegisterController", "User " + user.getIdUser() + " '" + user.getName() + "' (" + user.getEmail() + ") created");
-        // TODO
+        request.getSession().setAttribute("user", user);
         return new ModelAndView("redirect:/");
     }
 }

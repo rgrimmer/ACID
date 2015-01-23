@@ -41,7 +41,7 @@
 
                 <c:if test="${not empty errorMsg}">
                     <div id="errorBlock" class="alert alert-danger"><strong>${errorMsg}</strong></div>
-                        </c:if>
+                </c:if>
             </form>
         </div>
     </body>

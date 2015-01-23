@@ -111,7 +111,7 @@ public class List implements Serializable {
 
     @Override
     public String toString() {
-        return "org.acid.ejb.entities.List[ idList=" + idList + " ]";
+        return "List[id = " + idList + ",label=" + label + "]";
     }
 
 }

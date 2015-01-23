@@ -66,9 +66,10 @@
                     <button type="button" class="navbar-toggle collapsed"
                             data-toggle="collapse" data-target="#navbar" aria-expanded="false"
                             aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span> <span
-                            class="icon-bar"></span> <span class="icon-bar"></span> <span
-                            class="icon-bar"></span>
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="index.html">ACID</a>
                 </div>
@@ -84,13 +85,10 @@
             ${lists}
         </div>
 
-    <!--
-    <c:if test="${not empty infoMsg}">
-        <div class="alert alert-danger"><strong>${infoMsg}</strong></div>
-    </c:if>
-    -->
-    
-    <script
-    src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-</body>
+        <!--
+        <c:if test="${not empty infoMsg}">
+            <div class="alert alert-danger"><strong>${infoMsg}</strong></div>
+        </c:if>
+        -->
+    </body>
 </html>
