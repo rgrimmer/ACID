@@ -23,15 +23,15 @@
                 var data = ev.dataTransfer.getData("text");
                 if (ev.target.id.substring(0, 18) === "draggableContainer") {
                     ev.target.appendChild(document.getElementById(data));
-                    addToDb(document.getElementById(data).id, ev.target.id);
+                    addToDb(document.getElementById(data).id.substring(13), ev.target.id.substring(18));
                 } else if (ev.target.id.substring(0, 13) === "draggableItem") {
                     $(event.target).parent().append(document.getElementById(data));                  
-                    addToDb(document.getElementById(data).id, $(event.target).parent().attr('id'));
+                    addToDb(document.getElementById(data).id.substring(13), $(event.target).parent().attr('id').substring(18));
                 }
             }
 
             function addToDb(idTask, idList) {
-                post("${pageContext.request.contextPath}/board", {idT:idTask,idL:idList});
+                post("${pageContext.request.contextPath}/board?idBoard=${idBoard}", {idBoard:${idBoard}, idT:idTask, idL:idList});
             }
 
             function post(path, params, method) {
