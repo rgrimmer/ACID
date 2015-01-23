@@ -59,16 +59,13 @@ public class User implements Serializable {
     private Collection<Project> projectCollection1;
 
     public User() {
-        System.out.println("User(0) Call");
     }
 
     public User(Integer idUser) {
-        System.out.println("User(1) Call");
         this.idUser = idUser;
     }
 
     public User(Integer idUser, String email, String name, String password) {
-        System.out.println("User(3) Call");
         this.idUser = idUser;
         this.email = email;
         this.name = name;
@@ -117,7 +114,6 @@ public class User implements Serializable {
     }
 
     public void setProjectCollection(Collection<Project> projectCollection) {
-        System.out.println("setProject Call");
         this.projectCollection = projectCollection;
     }
 

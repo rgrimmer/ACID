@@ -18,6 +18,7 @@
         <module>ejb-jenkinsConnector</module>
         <module>ACID-web</module>
         <module>ACID-ear</module>
-    </modules>
-    <!-- 3 SLIDES TECHNIQUE , la veille les sources, présentation commmercial ! -->
+        <module>ejb-sonarTasks</module>
+  </modules>
+  
 </project>

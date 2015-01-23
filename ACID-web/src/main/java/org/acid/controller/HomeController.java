@@ -35,7 +35,9 @@ public class HomeController {
 
         for (Project project : user.getProjectCollection()) {
             listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"></div>";
-
+           // listProject += "<div class='addUserToProject'><form class=\"form-addUserToProject\" role=\"form\" method=\"POST\" action=\"${pageContext.request.contextPath}/home >"
+           //         + "<input type='text'/>"
+             //       + "</form></div>";
             for (Board board : project.getBoardCollection()) {
                 listProject += "<div class=\"col-sm-3\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
                         + board.getName()

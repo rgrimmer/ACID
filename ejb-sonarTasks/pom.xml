@@ -8,52 +8,78 @@
     </parent>
 
     <groupId>org</groupId>
-    <artifactId>ACID-web</artifactId>
-    <packaging>war</packaging>
+    <artifactId>ejb-sonarTasks</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ACID-web</name>
-
+    <packaging>ejb</packaging>
+    <name>ejb-sonarTasks</name>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.1.2.RELEASE</spring.version>
     </properties>
+    <url>http://maven.apache.org</url>
 
     <dependencies>
-        <!-- Servlets -->
+        <!-- Persistence -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.2</version>
             <scope>provided</scope>
         </dependency>
-        <!-- JSTL -->
         <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
         </dependency>
-        <!-- EJBs -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
+        </dependency> 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- EJB -->
+        <dependency>
+            <groupId>javaee</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.carol</groupId>
+            <artifactId>carol</artifactId>
+            <version>3.0.10</version>
+        </dependency>
         <dependency>
             <groupId>org.ow2.jonas.assemblies</groupId>
             <artifactId>client-jar</artifactId>
             <version>5.3.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -63,16 +89,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ejb-entities</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ejb-sonarTasks</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ejb-jenkinsConnector</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -94,13 +110,6 @@
                 <version>2.4</version>
                 <configuration>
                     <ejbVersion>3.0</ejbVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <packagingExcludes>WEB-INF/lib/client-jar-5.3.0.jar</packagingExcludes>
                 </configuration>
             </plugin>
         </plugins>
