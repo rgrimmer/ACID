@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.smartcardio.Card;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Project;
@@ -67,6 +68,17 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         return pwHash.equals(password, user.getPassword());
     }
 
+    
+    /*
+     ***********************************
+     * Cards methods
+     ***********************************
+     */
+    @Override
+    public Card getCardById(int id) {
+        return em.find(Card.class, id);
+    }
+    
     /*
      ***********************************
      * Boards methods

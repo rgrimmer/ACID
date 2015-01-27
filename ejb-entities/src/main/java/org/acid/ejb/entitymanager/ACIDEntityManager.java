@@ -2,6 +2,7 @@ package org.acid.ejb.entitymanager;
 
 import java.util.Collection;
 import javax.ejb.Remote;
+import javax.smartcardio.Card;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.Task;
@@ -26,6 +27,14 @@ public interface ACIDEntityManager {
 
     boolean isCorrectPassword(String password, User user);
 
+    /*
+    ***********************************
+    * Card methods
+    ***********************************
+    */
+    
+    Card getCardById(int id);
+    
     /*
      ***********************************
      * Board methods
