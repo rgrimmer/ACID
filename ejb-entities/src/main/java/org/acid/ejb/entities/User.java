@@ -19,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.JoinColumn;  
+import javax.persistence.JoinTable;  
 
 @Entity
 @Table(name = "User")
@@ -53,7 +55,7 @@ public class User implements Serializable {
     @Size(min = 1, max = 128)
     @Column(name = "password")
     private String password;
-    @ManyToMany(mappedBy = "userCollection", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "userCollection", fetch = FetchType.EAGER)    
     private Collection<Project> projectCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOwner", fetch = FetchType.EAGER)
     private Collection<Project> projectCollection1;
