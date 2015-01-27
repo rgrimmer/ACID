@@ -2,12 +2,11 @@ package org.acid.controller;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
-import org.acid.ejb.entities.User;
 import javax.servlet.http.HttpServletRequest;
+import org.acid.ejb.entities.User;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Task;
-import org.acid.ejb.entities.User;
 import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
@@ -26,11 +25,14 @@ public class BoardController {
     @EJB(mappedName = "logger")
     private Logger logger;
 
-    @RequestMapping("/board")
-    public ModelAndView board(Model model) {
+
+    @RequestMapping(value = "/board", method = RequestMethod.GET)
+    public ModelAndView board(Model model, @RequestParam(required = true) Integer idBoard) {
+        logger.debug("BoardController", "request get");
         ModelAndView mv = new ModelAndView("board");
+        mv.addObject("idBoard", idBoard);
         String lists = "";
-        Board board = entityManager.getBoardById(2);
+        Board board = entityManager.getBoardById(idBoard);
 
         for (List list : board.getListCollection()) {
             lists += "<div class=\"col-sm-3\">"
@@ -38,7 +40,7 @@ public class BoardController {
                     + "<div class=\"panel-heading\">"
                     + "<h3 class=\"panel-title\">" + list.getLabel() + "</h3>"
                     + "</div>"
-                    + "<div id=\"draggableContainerTodo\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
+                    + "<div id=\"draggableContainer"+  list.getIdList() +"\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
 
             for (Task task : list.getTaskCollection()) {
                 lists += "<div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
@@ -57,12 +59,23 @@ public class BoardController {
     @RequestMapping(value = "/board", method = RequestMethod.POST)
     public ModelAndView boardPost(Model model,
                                   HttpServletRequest request,
-                                  @RequestParam(value = "idT", required = true) String idTask,
-                                  @RequestParam(value = "idL", required = true) String idList) {
+                                  @RequestParam(value = "idBoard", required = true) Integer idBoard,
+                                  @RequestParam(value = "idT", required = true) Integer idTask,
+                                  @RequestParam(value = "idL", required = true) Integer idList) {
 
-        entityManager.moveTask(Integer.parseInt(idTask.substring(13,14)), Integer.parseInt(idList.substring(18,19)));
+        logger.debug("BoardController", "id tash " + idTask.toString());
+        logger.debug("BoardController", "id list " + idList.toString());
+        entityManager.moveTask(idTask, idList);
         
-        return board(model);
+        
+        logger.debug("BoardController", "id board " + idBoard.toString());
+        
+        return board(model, idBoard);
     }
 
+    @RequestMapping(value = "/board")
+    public String board(Model model) {
+        logger.debug("BoardController", "redirection");
+        return "redirect:/home";
+    }
 }
