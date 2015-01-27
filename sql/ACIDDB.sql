@@ -107,6 +107,8 @@ CREATE TABLE IF NOT EXISTS `Project` (
   `id_project` int(11) NOT NULL AUTO_INCREMENT,
   `id_owner` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
+  `jenkins_url` varchar(256) DEFAULT NULL,
+  `sonar_url` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id_project`),
   KEY `id_owner` (`id_owner`),
   KEY `id_owner_2` (`id_owner`)

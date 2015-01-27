@@ -1,9 +1,7 @@
 package org.acid.controller;
 
 import javax.ejb.EJB;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
-import org.acid.ejb.entities.User;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Task;
@@ -74,7 +72,6 @@ public class BoardController {
         logger.debug("BoardController", "id tash " + idTask.toString());
         logger.debug("BoardController", "id list " + idList.toString());
         entityManager.moveTask(idTask, idList);
-        
         
         logger.debug("BoardController", "id board " + idBoard.toString());
         

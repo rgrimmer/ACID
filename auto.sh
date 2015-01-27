@@ -1,5 +1,5 @@
 #!/bin/bash
-JONASDIR="/home/.../jonas-full-5.3.0" # TODO: change path
+JONASDIR="/home/.../jonas..." # TODO: change path
 DEPLOYDIR="$JONASDIR/deploy"
 TARGETDIR="target"
 CP="cp -f"

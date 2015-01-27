@@ -41,13 +41,12 @@ public class HomeController {
         if (((User) request.getAttribute("user")) == null) {
             return new ModelAndView("redirect:/login");
         }
-
-        int id = 1;
-
-        User user = entityManager.getUserById(id);
+        
+        User user = (User) request.getAttribute("user");
         ModelAndView mv = new ModelAndView("home");
+        
         String listProject = "";
-
+        logger.debug("HomeController", "Sizeof project collection: " + user.getProjectCollection().size());
         for (Project project : user.getProjectCollection()) {
             listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"></div>";
             listProject += "<div class=\"container\"><div class=\"row\" ><div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ><div class=\"sidebar-module\">"
@@ -60,11 +59,10 @@ public class HomeController {
                     + "         </form>"
                     + "     </div></div></div></div>";
             for (Board board : project.getBoardCollection()) {
-                listProject += "<div class=\"col-sm-3\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
+                listProject += "<div class=\"col-sm-3\"><a href=\"board?idBoard="+board.getIdBoard()+"\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
                         + board.getName()
-                        + "</h3></div></div></div>";
+                        + "</h3></div></div></a></div>";
             }
-
             listProject += "<hr>";
         }
         mv.addObject("projets", listProject);
