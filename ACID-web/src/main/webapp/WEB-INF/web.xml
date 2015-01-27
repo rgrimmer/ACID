@@ -48,6 +48,11 @@
       
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/task/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
         <url-pattern>/home/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost:3306
--- Généré le: Jeu 18 Décembre 2014 à 15:33
+-- Généré le: Mar 27 Janvier 2015 à 08:57
 -- Version du serveur: 5.5.37-0ubuntu0.13.10.1
 -- Version de PHP: 5.5.3-1ubuntu2.6
 
@@ -52,8 +52,10 @@ INSERT INTO `Board` (`id_board`, `id_project`, `id_type`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Board_list` (
+  `id_board_list` int(11) NOT NULL AUTO_INCREMENT,
   `id_board` int(11) NOT NULL,
   `id_list` int(11) NOT NULL,
+  PRIMARY KEY (`id_board_list`),
   KEY `id_board` (`id_board`,`id_list`),
   KEY `id_list` (`id_list`),
   KEY `id_list_2` (`id_list`)
@@ -128,8 +130,10 @@ INSERT INTO `Project` (`id_project`, `id_owner`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Project_user` (
+  `id_project_user` int(11) NOT NULL AUTO_INCREMENT,
   `id_project` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  PRIMARY KEY (`id_project_user`),
   KEY `id_project` (`id_project`),
   KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

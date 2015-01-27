@@ -67,6 +67,8 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         return pwHash.equals(password, user.getPassword());
     }
 
+    
+    
     /*
      ***********************************
      * Boards methods
@@ -137,7 +139,7 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
 
     /*
      ***********************************
-     * Boards methods
+     * Tasks methods
      ***********************************
      */
     
@@ -155,6 +157,11 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         List list = em.find(List.class, idList);
 
         task.setIdList(list);
+    }
+
+    @Override
+    public Task getTaskById(int id) {
+        return em.find(Task.class, id);
     }
 
     /*

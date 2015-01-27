@@ -2,6 +2,7 @@ package org.acid.ejb.entitymanager;
 
 import java.util.Collection;
 import javax.ejb.Remote;
+import javax.smartcardio.Card;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.Task;
@@ -25,7 +26,7 @@ public interface ACIDEntityManager {
     void addProjectToUser(User user, Project project);
 
     boolean isCorrectPassword(String password, User user);
-
+    
     /*
      ***********************************
      * Board methods
@@ -54,6 +55,7 @@ public interface ACIDEntityManager {
     
     Task createTask(int idTask, String label, String description, int priority);
     void moveTask(int idTask, int idBoardDest);
+    Task getTaskById(int id);
 
     Project getProjectByNameAndOwner(String name, User user);
 
