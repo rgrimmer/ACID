@@ -21,10 +21,12 @@ hs_err_pid*
 /ejb-logger/target/
 /ejb-entities/target/
 /ejb-pwhash/target/
-
+/ejb-jenkinsConnector/target/
+/ejb-sonarTasks/target/
 
 # Netbeans configurations
 nb-configuration.xml
 
 # Ignore the bash script as people need to customize it.
 auto.sh
+
