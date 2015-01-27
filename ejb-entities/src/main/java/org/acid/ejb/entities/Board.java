@@ -50,6 +50,7 @@ public class Board implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     private Collection<List> listCollection;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBoard")
     private Collection<Task> taskCollection;
     @JoinColumn(name = "id_type", referencedColumnName = "id_type")

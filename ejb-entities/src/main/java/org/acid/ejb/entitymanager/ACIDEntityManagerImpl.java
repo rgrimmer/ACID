@@ -113,8 +113,8 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
      ***********************************
      */
     @Override
-    public Project createProject(String name, User owner) {
-        Project project = new Project(name, owner);
+    public Project createProject(String name, String inputJenkinsUrl, String inputSonarUrl, User owner) {
+        Project project = new Project(name, inputJenkinsUrl, inputSonarUrl, owner);
         em.persist(project);
         logger.info("EJB-entities", "Project " + project.getIdProject() + " '" + project.getName() + "' (user=" + project.getIdOwner().getIdUser() + ") persisted in DB");
         addBoardToProject(project, "Backlog", "Backlog");

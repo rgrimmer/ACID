@@ -1,9 +1,7 @@
 package org.acid.controller;
 
 import javax.ejb.EJB;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
-import org.acid.ejb.entities.User;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Task;
@@ -29,11 +27,15 @@ public class BoardController {
     @RequestMapping(value = "/board", method = RequestMethod.GET)
     public ModelAndView board(Model model, @RequestParam(required = true) Integer idBoard) {
         logger.debug("BoardController", "request get");
+        
+        Board board = entityManager.getBoardById(idBoard);
+        if(board == null)
+            return new ModelAndView("home");
+        
         ModelAndView mv = new ModelAndView("board");
         mv.addObject("idBoard", idBoard);
-        String lists = "";
-        Board board = entityManager.getBoardById(idBoard);
 
+        String lists = "";
         for (List list : board.getListCollection()) {
             lists += "<div class=\"col-sm-3\">"
                     + "<div class=\"panel panel-primary\">"
@@ -42,7 +44,11 @@ public class BoardController {
                     + "</div>"
                     + "<div id=\"draggableContainer"+  list.getIdList() +"\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
 
-            for (Task task : list.getTaskCollection()) {
+            for (Task task : board.getTaskCollection()) {
+                if(task.getIdList().getIdList().intValue() != list.getIdList().intValue()) {
+                    continue;
+                }
+                
                 lists += "<div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
                         + task.getDescription() + "<span class=\"glyphicon glyphicon-pencil\"></span>"
                         + "</div>";
@@ -66,7 +72,6 @@ public class BoardController {
         logger.debug("BoardController", "id tash " + idTask.toString());
         logger.debug("BoardController", "id list " + idList.toString());
         entityManager.moveTask(idTask, idList);
-        
         
         logger.debug("BoardController", "id board " + idBoard.toString());
         
