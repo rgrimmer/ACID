@@ -21,6 +21,8 @@ public interface ACIDEntityManager {
     User getUserById(int id);
 
     User getUserByEmailAddress(String emailAddress);
+    
+    void addProjectToUser(User user, Project project);
 
     boolean isCorrectPassword(String password, User user);
 
