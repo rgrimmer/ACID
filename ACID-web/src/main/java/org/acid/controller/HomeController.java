@@ -1,6 +1,5 @@
 package org.acid.controller;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import org.acid.ejb.entities.Project;
@@ -11,8 +10,6 @@ import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
-import org.acid.ejb.entities.Task;
-import org.acid.ejb.sonartasks.SonarTasksManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,9 +23,6 @@ public class HomeController {
 
     @EJB(mappedName = "logger")
     private Logger logger;
-
-    @EJB(mappedName = "sonar")
-    private SonarTasksManager sonar;
 
     @RequestMapping(value = "/home", method = RequestMethod.POST)
     public ModelAndView addUserToProjectPost(HttpServletRequest request,
@@ -54,7 +48,7 @@ public class HomeController {
         String listProject = "";
         logger.debug("HomeController", "Sizeof project collection: " + user.getProjectCollection().size());
         for (Project project : user.getProjectCollection()) {
-            listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"></div>";
+            listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"><span> - <a href=\"sonar?idProject=" + project.getIdProject() + "\">Refresh Sonar<span class=\"glyphicon glyphicon-refresh\"><span></a></div>";
             listProject += "<div class=\"container\"><div class=\"row\" ><div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ><div class=\"sidebar-module\">"
                     + "         <form class=\"form-addUser\" role=\"form\" method=\"POST\" action=\"" + request.getServletContext().getContextPath() + "/home\">"
                     + "             <h2 class=\"form-addUser-heading\">Add user to project</h2>"
@@ -70,15 +64,8 @@ public class HomeController {
                         + "</h3></div></div></a></div>";
             }
             listProject += "<hr>";
-
-//            List<Task> tasks = sonar.getTasks(project);
-//            if (tasks != null) {
-//                logger.debug("HomeController", "nb Sonar tasks " + tasks.size());
-//                entityManager.insertTaskToBugBoard(project, tasks);
-//            }
         }
         mv.addObject("projets", listProject);
         return mv;
     }
-
 }

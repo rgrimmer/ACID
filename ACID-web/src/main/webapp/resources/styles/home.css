@@ -1,35 +1,38 @@
 body {
-	padding-left: 10px;
-	padding-right: 10px;
-	background-color: #eee;
-	min-height: 2000px;
-	padding-top: 70px;
-	background-color: #eee;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #eee;
+    min-height: 2000px;
+    padding-top: 70px;
+    background-color: #eee;
 }
 
 hr {
-	background-color: #5699d4;
-	color: #5699d4;
-	border: 1px;
-	width: 80%;
-	height: 1px;
+    background-color: #5699d4;
+    color: #5699d4;
+    border: 1px;
+    width: 80%;
+    height: 1px;
 }
 
 .board:hover {
-	background-color: #ea4f0b;
+    background-color: #ea4f0b;
 }
 
 .board {
-	background-color: #5699d4;
-	color: white;
-	min-height: 100px;
+    background-color: #5699d4;
+    color: white;
+    min-height: 100px;
 }
 
 .board-title {
-	font-weight: bold;
-	margin-bottom: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .panel-primary:hover {
-	background-color: #eee;
+    background-color: #eee;
+}
+#errorBlock {
+    margin-top: 15px;
 }
