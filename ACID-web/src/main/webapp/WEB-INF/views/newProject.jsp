@@ -46,6 +46,12 @@
                 <h2 class="form-newProject-heading">New Project</h2>
                 <label for="inputProjectName" class="sr-only">Project name</label>
                 <input id="inputProjectName" name="inputProjectName" class="form-control" placeholder="Project name" required autofocus>
+                
+                <label for="inputJenkinsUrl" class="sr-only">Jenkins URL (can be empty)</label>
+                <input id="inputJenkinsUrl" name="inputJenkinsUrl" class="form-control" placeholder="Jenkins URL (can be empty)">
+                
+                <label for="inputSonarUrl" class="sr-only">Sonar URL (can be empty)</label>
+                <input id="inputSonarUrl" name="inputSonarUrl" class="form-control" placeholder="Sonar URL (can be empty)">
 
                 <button id="submitBtn" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
 

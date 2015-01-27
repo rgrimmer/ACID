@@ -42,7 +42,7 @@ public interface ACIDEntityManager {
      * Project methods
      ***********************************
      */
-    Project createProject(String name, User owner);
+    Project createProject(String name, String inputJenkinsUrl, String inputSonarUrl, User owner);
 
     Project getProjectById(int idProject);
     

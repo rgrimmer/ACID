@@ -45,6 +45,15 @@ public class Project implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "name")
     private String name;
+    
+    @Column(name = "jenkins_url")
+    @Size(min = 0, max = 256)
+    private String jenkinsUrl;
+    
+    @Column(name = "sonar_url")
+    @Size(min = 0, max = 256)
+    private String sonarUrl;
+    
     @JoinTable(name = "Project_user", joinColumns = {
         @JoinColumn(name = "id_project", referencedColumnName = "id_project")}, inverseJoinColumns = {
         @JoinColumn(name = "id_user", referencedColumnName = "id_user")})
@@ -69,9 +78,11 @@ public class Project implements Serializable {
         this.name = name;
     }
 
-    public Project(String name, User owner) {
-        this.idOwner = owner;
+    public Project(String name, String jenkinsUrl, String sonarUrl, User idOwner) {
         this.name = name;
+        this.jenkinsUrl = jenkinsUrl;
+        this.sonarUrl = sonarUrl;
+        this.idOwner = idOwner;
     }
 
     public Integer getIdProject() {
@@ -84,6 +95,14 @@ public class Project implements Serializable {
 
     public String getName() {
         return name;
+    }
+    
+    public String getJenkinsUrl() {
+        return jenkinsUrl;
+    }
+    
+    public String getSonarUrl() {
+        return sonarUrl;
     }
 
     public void setName(String name) {

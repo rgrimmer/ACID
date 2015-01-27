@@ -1,14 +1,11 @@
 package org.acid.controller;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
-import org.acid.ejb.entities.Task;
 import org.acid.ejb.entities.User;
 import org.acid.ejb.entitymanager.ACIDEntityManager;
 import org.acid.ejb.logger.Logger;
-import org.acid.ejb.sonartasks.SonarTasks;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
