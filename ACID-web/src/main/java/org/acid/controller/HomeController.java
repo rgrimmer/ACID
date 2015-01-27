@@ -38,11 +38,11 @@ public class HomeController {
 
     @RequestMapping("/home")
     public ModelAndView home(Model model, HttpSession request) {
-        if (((User) request.getAttribute("user")) == null) {
+        User user = (User) request.getAttribute("user");
+        if (user == null) {
             return new ModelAndView("redirect:/login");
         }
         
-        User user = (User) request.getAttribute("user");
         ModelAndView mv = new ModelAndView("home");
         
         String listProject = "";
