@@ -1,8 +1,8 @@
 package org.acid.ejb.entitymanager;
 
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Remote;
-import javax.smartcardio.Card;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.Project;
 import org.acid.ejb.entities.Task;
@@ -22,11 +22,11 @@ public interface ACIDEntityManager {
     User getUserById(int id);
 
     User getUserByEmailAddress(String emailAddress);
-    
+
     void addProjectToUser(User user, Project project);
 
     boolean isCorrectPassword(String password, User user);
-    
+
     /*
      ***********************************
      * Board methods
@@ -37,7 +37,18 @@ public interface ACIDEntityManager {
     Collection<Board> getBoardsByIdProject(int id);
 
     Board addBoardToProject(Project project, String boardName, String boardLabel);
-
+    
+    Board getBugBoard(Project project);
+    
+    /*
+     ***********************************
+     * List methods
+     ***********************************
+     */
+    void addListToBoard(Board board, String label);
+    
+    org.acid.ejb.entities.List getListByLabel(String label);
+    
     /*
      ***********************************
      * Project methods
@@ -47,17 +58,26 @@ public interface ACIDEntityManager {
 
     Project getProjectById(int idProject);
     
+    Project getProjectByNameAndOwner(String name, User user);
+
     /*
      ***********************************
      * Task methods
      ***********************************
      */
-    
     Task createTask(int idTask, String label, String description, int priority);
-    void moveTask(int idTask, int idBoardDest);
-    Task getTaskById(int id);
 
-    Project getProjectByNameAndOwner(String name, User user);
+    void moveTask(int idTask, int idBoardDest);
+
+    Task getTaskById(int id);
+    
+    int insertTaskToBugBoard(Project project, List<Task> tasks);
+    
+    java.util.List<Task> getTasks(int boardId);
+    
+    java.util.List<Task> getSonarTasks(int boardId);
+    
+    java.util.List<Task> getNewSonarTasks(java.util.List<Task> boardTasks, java.util.List<Task> newTasks);
 
     /*
      ***********************************
@@ -65,5 +85,4 @@ public interface ACIDEntityManager {
      ***********************************
      */
     Type getTypeByLabel(String label);
-
 }

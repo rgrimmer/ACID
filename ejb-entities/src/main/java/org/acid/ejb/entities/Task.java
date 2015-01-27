@@ -1,5 +1,6 @@
 package org.acid.ejb.entities;
 
+import com.google.common.base.Objects;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -47,6 +48,9 @@ public class Task implements Serializable {
     @NotNull
     @Column(name = "priority")
     private int priority;
+    @Size(min = 0, max = 256)
+    @Column(name = "id_sonar")
+    private String idSonar;
     @JoinColumn(name = "id_list", referencedColumnName = "id_list")
     @ManyToOne(optional = false)
     private List idList;
@@ -63,8 +67,8 @@ public class Task implements Serializable {
 
     public Task(Integer idTask, String label, String description, int priority) {
         this.idTask = idTask;
-        this.label = label;
-        this.description = description;
+        setLabel(label);
+        setDescription(description);
         this.priority = priority;
     }
 
@@ -81,7 +85,7 @@ public class Task implements Serializable {
     }
 
     public void setLabel(String label) {
-        this.label = label;
+        this.label = trunc(label, 64);
     }
 
     public String getDescription() {
@@ -89,7 +93,7 @@ public class Task implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = trunc(description, 256);
     }
 
     public int getPriority() {
@@ -98,6 +102,14 @@ public class Task implements Serializable {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+    
+    public String getIdSonar() {
+        return idSonar;
+    }
+
+    public void setIdSonar(String idSonar) {
+        this.idSonar = idSonar;
     }
 
     public List getIdList() {
@@ -114,6 +126,10 @@ public class Task implements Serializable {
 
     public void setIdBoard(Board idBoard) {
         this.idBoard = idBoard;
+    }
+    
+    private String trunc(String input, int maxLength) {
+        return (input == null || input.length() < maxLength) ? input : input.substring(0, maxLength);
     }
 
     @Override

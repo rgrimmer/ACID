@@ -1,5 +1,6 @@
 package org.acid.controller;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import org.acid.ejb.entities.Project;
@@ -10,6 +11,8 @@ import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
+import org.acid.ejb.entities.Task;
+import org.acid.ejb.sonartasks.SonarTasksManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,15 +27,18 @@ public class HomeController {
     @EJB(mappedName = "logger")
     private Logger logger;
 
+    @EJB(mappedName = "sonar")
+    private SonarTasksManager sonar;
+
     @RequestMapping(value = "/home", method = RequestMethod.POST)
     public ModelAndView addUserToProjectPost(HttpServletRequest request,
-            @RequestParam(value = "inputEmail", required = true) String inputEmail,
-            @RequestParam(value = "inputIdProject", required = true) String intputIdProject) {
+                                             @RequestParam(value = "inputEmail", required = true) String inputEmail,
+                                             @RequestParam(value = "inputIdProject", required = true) String intputIdProject) {
         User user = entityManager.getUserByEmailAddress(inputEmail);
         Project project = entityManager.getProjectById(Integer.parseInt(intputIdProject));
         logger.debug("[Add project to user]", "work");
         entityManager.addProjectToUser(user, project);
-        logger.debug("[Add project to user]", "project"+project.getName() + "user "+user.getName());
+        logger.debug("[Add project to user]", "project" + project.getName() + "user " + user.getName());
         return new ModelAndView("redirect:/home");
     }
 
@@ -42,9 +48,9 @@ public class HomeController {
         if (user == null) {
             return new ModelAndView("redirect:/login");
         }
-        
+
         ModelAndView mv = new ModelAndView("home");
-        
+
         String listProject = "";
         logger.debug("HomeController", "Sizeof project collection: " + user.getProjectCollection().size());
         for (Project project : user.getProjectCollection()) {
@@ -54,16 +60,22 @@ public class HomeController {
                     + "             <h2 class=\"form-addUser-heading\">Add user to project</h2>"
                     + "             <label for=\"inputEmail\" class=\"sr-only\">User email address</label>"
                     + "             <input type=\"email\" id=\"inputEmail\" name=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus>"
-                    + "             <input type=\"hidden\" id=\"inputIdProject\" name=\"inputIdProject\" value=\""+ project.getIdProject() +"\" class=\"form-control\" required>"
+                    + "             <input type=\"hidden\" id=\"inputIdProject\" name=\"inputIdProject\" value=\"" + project.getIdProject() + "\" class=\"form-control\" required>"
                     + "             <button id=\"submitBtn\" class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Add</button>"
                     + "         </form>"
                     + "     </div></div></div></div>";
             for (Board board : project.getBoardCollection()) {
-                listProject += "<div class=\"col-sm-3\"><a href=\"board?idBoard="+board.getIdBoard()+"\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
+                listProject += "<div class=\"col-sm-3\"><a href=\"board?idBoard=" + board.getIdBoard() + "\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
                         + board.getName()
                         + "</h3></div></div></a></div>";
             }
             listProject += "<hr>";
+
+//            List<Task> tasks = sonar.getTasks(project);
+//            if (tasks != null) {
+//                logger.debug("HomeController", "nb Sonar tasks " + tasks.size());
+//                entityManager.insertTaskToBugBoard(project, tasks);
+//            }
         }
         mv.addObject("projets", listProject);
         return mv;

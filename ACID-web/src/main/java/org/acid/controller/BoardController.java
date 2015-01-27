@@ -42,7 +42,7 @@ public class BoardController {
         if (!userIsSubscribToBoard(user, board)) {
             return new ModelAndView("redirect:/home");
         }
-        
+
         logger.debug("BoardController", "request get");
 
         ModelAndView mv = new ModelAndView("board");
@@ -58,15 +58,13 @@ public class BoardController {
                     + "<div id=\"draggableContainer" + list.getIdList() + "\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
 
             for (Task task : board.getTaskCollection()) {
-                if (task.getIdList().getIdList().intValue() != list.getIdList().intValue()) {
+                if (task.getIdList().getIdList().equals(list.getIdList())) {
                     continue;
                 }
-                
-                lists += "<a href=\"task?idTask="+task.getIdTask()+"\"><div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
+                lists += "<a href=\"task?idTask=" + task.getIdTask() + "\"><div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
                         + task.getLabel() + "<span class=\"glyphicon glyphicon-pencil\"></span>"
                         + "</div></a>";
             }
-
             lists += "</div></div></div>";
         }
 
@@ -77,10 +75,10 @@ public class BoardController {
 
     @RequestMapping(value = "/board", method = RequestMethod.POST)
     public ModelAndView boardPost(Model model,
-            HttpServletRequest request,
-            @RequestParam(value = "idBoard", required = true) Integer idBoard,
-            @RequestParam(value = "idT", required = true) Integer idTask,
-            @RequestParam(value = "idL", required = true) Integer idList) {
+                                  HttpServletRequest request,
+                                  @RequestParam(value = "idBoard", required = true) Integer idBoard,
+                                  @RequestParam(value = "idT", required = true) Integer idTask,
+                                  @RequestParam(value = "idL", required = true) Integer idList) {
 
         logger.debug("BoardController", "id tash " + idTask.toString());
         logger.debug("BoardController", "id list " + idList.toString());
@@ -96,13 +94,13 @@ public class BoardController {
         logger.debug("BoardController", "redirection");
         return "redirect:/home";
     }
-    
-    
+
     private boolean userIsSubscribToBoard(User user, Board board) {
         int idProject = board.getIdProject().getIdProject();
         for (Project project : user.getProjectCollection()) {
-            if (project.getIdProject() == idProject)
+            if (project.getIdProject() == idProject) {
                 return true;
+            }
         }
         return false;
     }

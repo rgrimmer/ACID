@@ -2,6 +2,7 @@ package org.acid.ejb.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -126,6 +128,22 @@ public class Board implements Serializable {
 
     public void setIdProject(Project idProject) {
         this.idProject = idProject;
+    }
+    
+    public org.acid.ejb.entities.List getFirstList() {
+        // 'TO DO' for Sprint, 'TOFIX' for BugReport, 'TO DO NEXT' for Backlog
+        for (org.acid.ejb.entities.List l : listCollection) {
+            if (l.getLabel().startsWith("TODO") || l.getLabel().equals("TOFIX")) {
+                return l;
+            }
+        }
+        return null;
+    }
+    
+    public void addList(List list) {
+        System.out.println("###########################> " + listCollection.size());
+        listCollection.add(list);
+        System.out.println("########################### AFTER> " + listCollection.size());
     }
 
     @Override

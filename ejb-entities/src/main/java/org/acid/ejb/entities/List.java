@@ -58,6 +58,10 @@ public class List implements Serializable {
         this.idList = idList;
         this.label = label;
     }
+    
+    public List(String label) {
+        this.label = label;
+    }
 
     public Integer getIdList() {
         return idList;
