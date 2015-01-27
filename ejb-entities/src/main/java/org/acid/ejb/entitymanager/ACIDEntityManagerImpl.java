@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.smartcardio.Card;
 import org.acid.ejb.entities.Board;
 import org.acid.ejb.entities.List;
 import org.acid.ejb.entities.Project;
@@ -69,15 +68,6 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     }
 
     
-    /*
-     ***********************************
-     * Cards methods
-     ***********************************
-     */
-    @Override
-    public Card getCardById(int id) {
-        return em.find(Card.class, id);
-    }
     
     /*
      ***********************************
@@ -149,7 +139,7 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
 
     /*
      ***********************************
-     * Boards methods
+     * Tasks methods
      ***********************************
      */
     
@@ -167,6 +157,11 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         List list = em.find(List.class, idList);
 
         task.setIdList(list);
+    }
+
+    @Override
+    public Task getTaskById(int id) {
+        return em.find(Task.class, id);
     }
 
     /*

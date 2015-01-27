@@ -26,14 +26,6 @@ public interface ACIDEntityManager {
     void addProjectToUser(User user, Project project);
 
     boolean isCorrectPassword(String password, User user);
-
-    /*
-    ***********************************
-    * Card methods
-    ***********************************
-    */
-    
-    Card getCardById(int id);
     
     /*
      ***********************************
@@ -63,6 +55,7 @@ public interface ACIDEntityManager {
     
     Task createTask(int idTask, String label, String description, int priority);
     void moveTask(int idTask, int idBoardDest);
+    Task getTaskById(int id);
 
     Project getProjectByNameAndOwner(String name, User user);
 

@@ -49,9 +49,9 @@ public class BoardController {
                     continue;
                 }
                 
-                lists += "<div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
-                        + task.getDescription() + "<span class=\"glyphicon glyphicon-pencil\"></span>"
-                        + "</div>";
+                lists += "<a href=\"task?idTask="+task.getIdTask()+"\"><div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
+                        + task.getLabel() + "<span class=\"glyphicon glyphicon-pencil\"></span>"
+                        + "</div></a>";
             }
 
             lists += "</div></div></div>";
