@@ -39,9 +39,9 @@ public class HomeController {
            //         + "<input type='text'/>"
              //       + "</form></div>";
             for (Board board : project.getBoardCollection()) {
-                listProject += "<div class=\"col-sm-3\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
+                listProject += "<div class=\"col-sm-3\"><a href=\"board?idBoard="+board.getIdBoard()+"\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
                         + board.getName()
-                        + "</h3></div></div></div>";
+                        + "</h3></div></div></a></div>";
             }
 
             listProject += "<hr>";
