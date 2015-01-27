@@ -71,11 +71,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">ACID</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/">ACID</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="navbar-form navbar-right">
-                        <a id="logoutBtn" class="btn btn-danger" href="logout.html">Logout</a>
+                        <a id="logoutBtn" class="btn btn-danger" href="${pageContext.request.contextPath}/logout">Logout</a>
                     </div>
                 </div>
             </div>
