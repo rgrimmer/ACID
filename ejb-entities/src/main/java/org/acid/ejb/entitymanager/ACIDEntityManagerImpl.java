@@ -56,9 +56,12 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     }
 
     @Override
-    public void addProjectToUser(User user, Project project) {
-        //Query q = em.createNamedQuery("User.addProject").setParameter("idP", project.getIdProject()).setParameter("idU", user.getIdUser());
-        //q.executeUpdate();
+    public void addUserToProject(User user, Project project) {
+        java.util.List<User> users = (project.getUserCollection() == null)
+                                     ? new LinkedList<User>()
+                                     : new LinkedList<User>(project.getUserCollection());
+        users.add(user);
+        project.setUserCollection(users);
     }
 
     @Override
@@ -113,9 +116,11 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
      */
     @Override
     public void addListToBoard(Board board, String label) {
-        org.acid.ejb.entities.List list = new org.acid.ejb.entities.List(label);
-        em.persist(list);
-        board.addList(list);
+        org.acid.ejb.entities.List list = getListByLabel(label);
+        if (list != null) {
+            board.addList(list);
+            logger.debug("EJB-entities", "List \"" + label + "\" added to board \"" + board.getName() + "\"");
+        }
     }
 
     @Override
@@ -136,17 +141,25 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
         em.persist(project);
         logger.info("EJB-entities", "Project " + project.getIdProject() + " '" + project.getName() + "' (user=" + project.getIdOwner().getIdUser() + ") persisted in DB");
         Board backlog = addBoardToProject(project, "Backlog", "Backlog");
-        addListToBoard(backlog, "TODO NEXT");
+        if (backlog != null) {
+            addListToBoard(backlog, "TODO NEXT");
+        }
         Board bugfix = addBoardToProject(project, "Bug report", "BugFix");
-        addListToBoard(bugfix, "TODO");
-        addListToBoard(bugfix, "DOING");
-        addListToBoard(bugfix, "DONE");
-        addListToBoard(bugfix, "DONE DONE");
+        if (bugfix != null) {
+            addListToBoard(bugfix, "TODO");
+            addListToBoard(bugfix, "DOING");
+            addListToBoard(bugfix, "DONE");
+            addListToBoard(bugfix, "DONE DONE");
+        }
         Board sprint = addBoardToProject(project, "Sprint 1", "Sprint");
-        addListToBoard(sprint, "TODO");
-        addListToBoard(sprint, "DOING");
-        addListToBoard(sprint, "DONE");
-        addListToBoard(sprint, "DONE DONE");
+        if (sprint != null) {
+            addListToBoard(sprint, "TODO");
+            addListToBoard(sprint, "DOING");
+            addListToBoard(sprint, "DONE");
+            addListToBoard(sprint, "DONE DONE");
+        }
+        // Add the user to the Project_user association table
+        addUserToProject(owner, project);
         return project;
     }
 
@@ -161,6 +174,32 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
                 .setParameter("name", name)
                 .setParameter("owner", user);
         return (Project) getSingleResultOrNull(query);
+    }
+
+    @Override
+    public java.util.List<Project> getProjectsByUser(User user) {
+//        em.merge(user);
+//        em.refresh(user);
+        return new LinkedList<Project>(user.getProjectCollection());
+    }
+
+    @Override
+    public void removeProject(Project project) {
+        // TODO:
+//        for (Board board : project.getBoardCollection()) {
+//            for (List list : board.getListCollection()) {
+//                for (Task task : list.getTaskCollection()) {
+//                    em.remove(em.contains(task) ? project : em.merge(task));
+//                    logger.debug("ejb-entities", "Task " + task.getIdTask() + " removed");
+//                }
+//                em.remove(em.contains(list) ? project : em.merge(list));
+//                logger.debug("ejb-entities", "List " + list.getIdList() + " removed");
+//            }
+//            em.remove(em.contains(board) ? project : em.merge(board));
+//            logger.debug("ejb-entities", "Board " + board.getIdBoard() + " removed");
+//        }
+//        em.remove(em.contains(project) ? project : em.merge(project));
+//        logger.debug("ejb-entities", "Project " + project.getIdProject() + " removed");
     }
 
     /*

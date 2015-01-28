@@ -1,4 +1,4 @@
-package org.ejb.jenkinsconnector;
+package org.acid.ejb.jenkinsconnector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.acid.ejb.logger.Logger;
-import org.ejb.jenkinsconnector.data.Project;
+import org.acid.ejb.jenkinsconnector.data.Project;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 
-    Logger logger;
+    private final Logger logger;
 
     private DocumentBuilder b;
     private Document page;
@@ -62,9 +62,6 @@ public class XMLParser {
                     ret.add(new Project(jobs.item(i)));
                 }
             }
-        }
-        for (Project p : ret) {
-            logger.info("Projet Jenkins", p.toString());
         }
         return ret;
 

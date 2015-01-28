@@ -1,5 +1,6 @@
 package org.acid.controller;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import org.acid.ejb.entities.Project;
@@ -10,6 +11,7 @@ import org.acid.ejb.logger.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
+import org.acid.ejb.jenkinsconnector.JenkinsConnector;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,11 +20,17 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
+    public static final String JENKINS_USERNAME = "acid";
+    public static final String JENKINS_PASSWORD = "acid";
+
     @EJB(mappedName = "entityManager")
     private ACIDEntityManager entityManager;
 
     @EJB(mappedName = "logger")
     private Logger logger;
+
+    @EJB(mappedName = "jenkinsConnector")
+    private JenkinsConnector jenkins;
 
     @RequestMapping(value = "/home", method = RequestMethod.POST)
     public ModelAndView addUserToProjectPost(HttpServletRequest request,
@@ -31,7 +39,7 @@ public class HomeController {
         User user = entityManager.getUserByEmailAddress(inputEmail);
         Project project = entityManager.getProjectById(Integer.parseInt(intputIdProject));
         logger.debug("[Add project to user]", "work");
-        entityManager.addProjectToUser(user, project);
+        entityManager.addUserToProject(user, project);
         logger.debug("[Add project to user]", "project" + project.getName() + "user " + user.getName());
         return new ModelAndView("redirect:/home");
     }
@@ -46,9 +54,29 @@ public class HomeController {
         ModelAndView mv = new ModelAndView("home");
 
         String listProject = "";
-        logger.debug("HomeController", "Sizeof project collection: " + user.getProjectCollection().size());
-        for (Project project : user.getProjectCollection()) {
-            listProject += "<div class=\"board-title\" >" + project.getName() + " <span class=\"glyphicon glyphicon-folder-open\"><span> - <a href=\"sonar?idProject=" + project.getIdProject() + "\">Refresh Sonar<span class=\"glyphicon glyphicon-refresh\"><span></a></div>";
+        List<Project> projects = entityManager.getProjectsByUser(user);
+        logger.debug("HomeController", "Sizeof project collection: " + projects.size());
+        for (Project project : projects) {
+            boolean onJenkins = (project.getJenkinsUrl() != null && !project.getJenkinsUrl().isEmpty());
+            String jenkinsStatus = null;
+            
+            if (onJenkins) {
+                jenkins.secureConnect(project.getJenkinsUrl(), JENKINS_USERNAME, JENKINS_PASSWORD);
+                org.acid.ejb.jenkinsconnector.data.Project jenkinsProject = jenkins.getProjectByName(project.getName());
+                if (jenkinsProject == null) {
+                    logger.warn("HomeController", "Project \"" + project.getName() + "\" not found on Jenkins");
+                    mv.addObject("errorMsg", "Project \"" + project.getName() + "\" not found on Jenkins");
+                    return mv;
+                }
+                jenkinsStatus = jenkins.getStatus(jenkinsProject);
+            }
+
+            listProject += "<div class=\"board-title\" >" + project.getName() + ""
+                    + "<span class=\"glyphicon glyphicon-folder-open\"><span>"
+                    + ((project.getSonarUrl() == null || project.getSonarUrl().isEmpty()) ? "" : " | <a href=\"sonar?idProject=" + project.getIdProject() + "\">Refresh Sonar<span class=\"glyphicon glyphicon-refresh\"><span></a>")
+                    + ((onJenkins) ? " | Jenkins status: " + jenkinsStatus : "")
+                    + " | <a href=\"removeProject?idProject=" + project.getIdProject() + "\">Remove<span class=\"glyphicon glyphicon-remove-sign\"><span></a>"
+                    + "</div>";
             listProject += "<div class=\"container\"><div class=\"row\" ><div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ><div class=\"sidebar-module\">"
                     + "         <form class=\"form-addUser\" role=\"form\" method=\"POST\" action=\"" + request.getServletContext().getContextPath() + "/home\">"
                     + "             <h2 class=\"form-addUser-heading\">Add user to project</h2>"
@@ -65,6 +93,7 @@ public class HomeController {
             }
             listProject += "<hr>";
         }
+
         mv.addObject("projets", listProject);
         return mv;
     }

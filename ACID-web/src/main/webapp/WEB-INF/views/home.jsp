@@ -26,6 +26,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="navbar-form navbar-right">
+                        <a id="newProjectBtn" class="btn btn-primary" href="${pageContext.request.contextPath}/newProject">New Project</a>
                         <a id="logoutBtn" class="btn btn-danger" href="${pageContext.request.contextPath}/logout">Logout</a>
                     </div>
                 </div>

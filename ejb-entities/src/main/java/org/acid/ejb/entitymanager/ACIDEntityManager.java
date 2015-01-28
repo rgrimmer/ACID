@@ -22,8 +22,8 @@ public interface ACIDEntityManager {
     User getUserById(int id);
 
     User getUserByEmailAddress(String emailAddress);
-
-    void addProjectToUser(User user, Project project);
+    
+    void addUserToProject(User user, Project project);
 
     boolean isCorrectPassword(String password, User user);
 
@@ -59,6 +59,10 @@ public interface ACIDEntityManager {
     Project getProjectById(int idProject);
     
     Project getProjectByNameAndOwner(String name, User user);
+    
+    java.util.List<Project> getProjectsByUser(User user);
+    
+    void removeProject(Project project);
 
     /*
      ***********************************

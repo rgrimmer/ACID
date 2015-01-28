@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.ejb.jenkinsconnector;
+package org.acid.ejb.jenkinsconnector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +9,7 @@ import org.acid.ejb.logger.Logger;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.ejb.jenkinsconnector.data.Project;
+import org.acid.ejb.jenkinsconnector.data.Project;
 
 @Stateful(mappedName = "jenkinsConnector")
 public class JenkinsConnectorImpl implements JenkinsConnector {
@@ -29,7 +25,7 @@ public class JenkinsConnectorImpl implements JenkinsConnector {
      * Make a secured connection to a jenkins webApi.
      *
      * @param hostName uri of jenkins (http://hostname.tld:port/)
-     * @param user username
+     * @param user     username
      * @param password password
      *
      */
@@ -100,11 +96,48 @@ public class JenkinsConnectorImpl implements JenkinsConnector {
         try {
             client.executeMethod(getList);
             XMLParser parser = new XMLParser(getList.getResponseBodyAsStream(), logger);
-            parser.fetchProjectList();
-
+            ret = parser.fetchProjectList();
         } catch (IOException ex) {
             logger.error("Jenkins connection", "Failed to get project list", ex);
         }
+        return ret;
+    }
+
+    @Override
+    public Project getProjectByName(String projectName) {
+        logger.debug("Connection Jenkins", "Project name = " + projectName);
+        String[] tokens = projectName.split(":");
+        String name = tokens[tokens.length - 1];
+        logger.debug("Connection Jenkins", "name = " + name);
+        List<Project> projects = getProjectList();
+        if (projects != null) {
+            for (Project p : projects) {
+                logger.debug("Connection Jenkins", "name loop = " + p.getProjectName());
+                if (p.getProjectName().equals(name)) {
+                    return p;
+                }
+            }
+        }
         return null;
     }
+
+    @Override
+    public String getStatus(Project project) {
+        switch (project.getColor()) {
+            case BLUE:
+                return "SUCCESS";
+            case RED:
+                return "FAILED";
+            case YELLOW:
+                return "UNSTABLE";
+            case BLUE_ANIME:
+                return "RUNNING... (last: SUCCESS)";
+            case RED_ANIME:
+                return "RUNNING... (last: FAILED)";
+            case YELLOW_ANIME:
+                return "RUNNING... (last: UNSTABLE)";
+        }
+        return "Unknown";
+    }
+
 }

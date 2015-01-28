@@ -1,23 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.ejb.jenkinsconnector.data;
+package org.acid.ejb.jenkinsconnector.data;
 
+import java.io.Serializable;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- *
- * @author hadryx
- */
-public class Project {
+public class Project implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     //Attributes
-    String projectName;
-    String projectUrl;
-    ProjectColor color;
+    private String projectName;
+    private String projectUrl;
+    private ProjectColor color;
 
     // Constructor
     public Project(Node item) {
@@ -63,7 +57,6 @@ public class Project {
     }
 
     // Override methods
-
     @Override
     public String toString() {
         String ret = "";

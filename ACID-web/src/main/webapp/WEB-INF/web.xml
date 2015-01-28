@@ -60,4 +60,9 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/sonar/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/removeProject/*</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -141,9 +140,9 @@ public class Board implements Serializable {
     }
     
     public void addList(List list) {
-        System.out.println("###########################> " + listCollection.size());
-        listCollection.add(list);
-        System.out.println("########################### AFTER> " + listCollection.size());
+        java.util.List<List> lists = (listCollection == null) ? new LinkedList<List>() : new LinkedList<List>(listCollection);
+        lists.add(list);
+        setListCollection(lists);
     }
 
     @Override
