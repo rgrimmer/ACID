@@ -228,6 +228,15 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     }
 
     @Override
+    public Task createTask(String label, String description, Board board, org.acid.ejb.entities.List list) {
+        Task task = new Task(label, description, 1);
+        task.setIdBoard(board);
+        task.setIdList(list);
+        em.persist(task);
+        return task;
+    }
+
+    @Override
     public void moveTask(int idTask, int idList) {
         Task task = em.find(Task.class, idTask);
         List list = em.find(List.class, idList);

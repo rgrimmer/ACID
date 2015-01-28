@@ -17,15 +17,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class NewBoardController {
 
     public static final int MAX_PROJECT_NAME_LENGTH = 256;
-    
+
     @EJB(mappedName = "logger")
     private Logger logger;
-    
+
     @EJB(mappedName = "entityManager")
     private ACIDEntityManager entityManager;
 
     @RequestMapping("/newBoard")
-    public String register(Model model, HttpSession request) {
+    public String newBoard(Model model, HttpSession request) {
         if (((User) request.getAttribute("user")) == null) {
             return "redirect:/login";
         }
@@ -33,16 +33,13 @@ public class NewBoardController {
     }
 
     @RequestMapping(value = "/newBoard", method = RequestMethod.POST)
-    public ModelAndView registerPost(HttpServletRequest request,
+    public ModelAndView newBoardPost(HttpServletRequest request,
                                      @RequestParam(value = "inputProjectName", required = true) String inputProjectName) {
-        System.out.println(inputProjectName);
         ModelAndView mv = new ModelAndView("newBoard");
-        if(inputProjectName.length() > MAX_PROJECT_NAME_LENGTH){
-            mv.addObject("errorMsg", "Project name  must be less than 256 caracters");
+        if (inputProjectName.length() > MAX_PROJECT_NAME_LENGTH) {
+            mv.addObject("errorMsg", "Project name  must be less than " + MAX_PROJECT_NAME_LENGTH + " characters");
             return mv;
-        }        
-        mv = new ModelAndView("newBoard");
-        return (mv);
-        
+        }
+        return mv;
     }
 }

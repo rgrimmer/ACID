@@ -1,0 +1,38 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+.form-newTask {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-newTask .form-newProject-heading,
+.form-newTask .checkbox {
+  margin-bottom: 10px;
+}
+.form-newTask .checkbox {
+  font-weight: normal;
+}
+.form-newTask .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-newTask .form-control:focus {
+  z-index: 2;
+}
+#submitBtn {
+  margin-top: 10px;
+}
+#errorBlock {
+    margin-top: 15px;
+}
+#logo {
+    margin-top: 40px;
+}

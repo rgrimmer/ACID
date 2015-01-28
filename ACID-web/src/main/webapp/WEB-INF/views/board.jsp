@@ -75,6 +75,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="navbar-form navbar-right">
+                        <a id="newTaskBtn" class="btn btn-primary" href="${pageContext.request.contextPath}/newTask?idBoard=${idBoard}">New task</a>
                         <a id="logoutBtn" class="btn btn-danger" href="${pageContext.request.contextPath}/logout">Logout</a>
                     </div>
                 </div>

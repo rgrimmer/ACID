@@ -2,7 +2,6 @@ package org.acid.ejb.sonartasks;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.acid.ejb.entities.Project;

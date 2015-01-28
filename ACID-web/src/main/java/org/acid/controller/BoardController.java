@@ -28,7 +28,6 @@ public class BoardController {
 
     @RequestMapping(value = "/board", method = RequestMethod.GET)
     public ModelAndView board(Model model, HttpSession session, @RequestParam(required = true) Integer idBoard) {
-
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return new ModelAndView("redirect:/login");
@@ -38,7 +37,6 @@ public class BoardController {
         if (board == null) {
             return new ModelAndView("redirect:/home");
         }
-
         if (!userIsSubscribToBoard(user, board)) {
             return new ModelAndView("redirect:/home");
         }
@@ -46,7 +44,6 @@ public class BoardController {
         logger.debug("BoardController", "request get");
 
         ModelAndView mv = new ModelAndView("board");
-        mv.addObject("idBoard", idBoard);
 
         String lists = "";
         for (List list : board.getListCollection()) {
@@ -68,6 +65,7 @@ public class BoardController {
             lists += "</div></div></div>";
         }
 
+        mv.addObject("idBoard", board.getIdBoard());
         mv.addObject("boardName", board.getName());
         mv.addObject("lists", lists);
         return mv;

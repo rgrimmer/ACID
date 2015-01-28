@@ -24,10 +24,9 @@ public class RegisterController {
 
     @EJB(mappedName = "entityManager")
     private ACIDEntityManager entityManager;
-    
+
 //    @EJB(mappedName = "sonarTasks")
 //    private SonarTasks sonarTasksManager;
-
     @RequestMapping("/register")
     public String register(Model model) {
 //        List<Task> tasks = sonarTasksManager.getTasks();

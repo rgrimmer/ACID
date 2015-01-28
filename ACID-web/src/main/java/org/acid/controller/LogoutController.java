@@ -16,7 +16,7 @@ public class LogoutController {
 
     @RequestMapping("/logout")
     public String logout(Model model, HttpSession session) {
-        logger.debug("LoginController", "Destroy user-session for user : '" + ((User)session.getAttribute("user")).getName() + "'");
+        logger.debug("LoginController", "Destroy user-session for user : '" + ((User) session.getAttribute("user")).getName() + "'");
         session.setAttribute("user", null);
         return ("redirect:/login");
     }

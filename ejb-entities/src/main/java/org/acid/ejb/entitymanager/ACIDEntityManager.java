@@ -70,6 +70,8 @@ public interface ACIDEntityManager {
      ***********************************
      */
     Task createTask(int idTask, String label, String description, int priority);
+    
+    Task createTask(String label, String description, Board board, org.acid.ejb.entities.List list);
 
     void moveTask(int idTask, int idBoardDest);
 

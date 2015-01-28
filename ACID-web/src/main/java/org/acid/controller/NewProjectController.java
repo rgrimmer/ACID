@@ -36,10 +36,10 @@ public class NewProjectController {
 
     @RequestMapping(value = "/newProject", method = RequestMethod.POST)
     public ModelAndView newProjectPost(HttpSession session,
-                                     HttpServletRequest request,
-                                     @RequestParam(value = "inputProjectName", required = true) String inputProjectName,
-                                     @RequestParam(value = "inputJenkinsUrl", required = false) String inputJenkinsUrl,
-                                     @RequestParam(value = "inputSonarUrl", required = false) String inputSonarUrl) {
+                                       HttpServletRequest request,
+                                       @RequestParam(value = "inputProjectName", required = true) String inputProjectName,
+                                       @RequestParam(value = "inputJenkinsUrl", required = false) String inputJenkinsUrl,
+                                       @RequestParam(value = "inputSonarUrl", required = false) String inputSonarUrl) {
         if (inputProjectName.length() > MAX_PROJECT_NAME_LENGTH) {
             ModelAndView mv = new ModelAndView("newProject");
             mv.addObject("errorMsg", "Project name's length must be less than " + MAX_PROJECT_NAME_LENGTH + " caracters.");

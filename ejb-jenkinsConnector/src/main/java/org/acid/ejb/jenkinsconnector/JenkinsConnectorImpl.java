@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.acid.ejb.jenkinsconnector.data.Project;
 import org.acid.ejb.logger.Logger;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.acid.ejb.jenkinsconnector.data.Project;
 
 @Stateful(mappedName = "jenkinsConnector")
 public class JenkinsConnectorImpl implements JenkinsConnector {

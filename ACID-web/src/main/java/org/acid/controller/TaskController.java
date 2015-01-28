@@ -1,7 +1,6 @@
 package org.acid.controller;
 
 import javax.ejb.EJB;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import org.acid.ejb.entities.Task;
 import org.acid.ejb.entitymanager.ACIDEntityManager;
@@ -22,25 +21,24 @@ public class TaskController {
     @EJB(mappedName = "logger")
     private Logger logger;
 
-
     @RequestMapping(value = "/task", method = RequestMethod.GET)
     public ModelAndView card(Model model, @RequestParam(required = true) Integer idTask) {
         logger.debug("TaskController", "request get");
         ModelAndView mv = new ModelAndView("task");
         mv.addObject("idTask", idTask);
         String taskStr = "";
-        
+
         Task task = entityManager.getTaskById(idTask);
 
         taskStr += "<div id=\"task\" class=\"panel panel-primary center\">"
                 + "<div class=\"panel-heading\">"
-                      + "<h3 class=\"panel-title\"><span class=\"glyphicon glyphicon-file\"></span>"+task.getLabel()+"</h3>"
+                + "<h3 class=\"panel-title\"><span class=\"glyphicon glyphicon-file\"></span>" + task.getLabel() + "</h3>"
                 + "</div>"
-                + "<div class=\"panel-body\"><span class=\"glyphicon glyphicon-list-alt\"></span>"+ " Description : " + task.getDescription() + "</div>"
+                + "<div class=\"panel-body\"><span class=\"glyphicon glyphicon-list-alt\"></span>" + " Description : " + task.getDescription() + "</div>"
                 //+ "<button onClick=\"showConfirmationBox()\" type=\"button\" class=\"btn btn-danger\">"
                 //        + "<span class=\"glyphicon glyphicon-remove-sign\"></span> Delete"
                 //+ "</button>"
-        +"</div>";
+                + "</div>";
 
         mv.addObject("task", taskStr);
 
@@ -49,9 +47,9 @@ public class TaskController {
 
     @RequestMapping(value = "/task", method = RequestMethod.POST)
     public ModelAndView taskPost(Model model,
-                                  HttpServletRequest request,
-                                  @RequestParam(value = "idTask", required = true) Integer idTask) {
-        
+                                 HttpServletRequest request,
+                                 @RequestParam(value = "idTask", required = true) Integer idTask) {
+
         return card(model, idTask);
     }
 

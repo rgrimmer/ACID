@@ -22,7 +22,7 @@ public class SonarController {
 
     @EJB(mappedName = "logger")
     private Logger logger;
-    
+
     @EJB(mappedName = "sonar")
     private SonarTasksManager sonar;
 

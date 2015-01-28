@@ -1,6 +1,5 @@
 package org.acid.ejb.entities;
 
-import com.google.common.base.Objects;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -67,6 +66,12 @@ public class Task implements Serializable {
 
     public Task(Integer idTask, String label, String description, int priority) {
         this.idTask = idTask;
+        setLabel(label);
+        setDescription(description);
+        this.priority = priority;
+    }
+    
+    public Task(String label, String description, int priority) {
         setLabel(label);
         setDescription(description);
         this.priority = priority;
