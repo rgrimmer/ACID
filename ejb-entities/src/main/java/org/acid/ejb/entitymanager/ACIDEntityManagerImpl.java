@@ -57,6 +57,7 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
 
     @Override
     public void addUserToProject(User user, Project project) {
+        em.merge(project);
         java.util.List<User> users = (project.getUserCollection() == null)
                                      ? new LinkedList<User>()
                                      : new LinkedList<User>(project.getUserCollection());

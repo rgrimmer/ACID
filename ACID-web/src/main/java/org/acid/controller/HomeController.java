@@ -38,9 +38,13 @@ public class HomeController {
                                              @RequestParam(value = "inputIdProject", required = true) String intputIdProject) {
         User user = entityManager.getUserByEmailAddress(inputEmail);
         Project project = entityManager.getProjectById(Integer.parseInt(intputIdProject));
-        logger.debug("[Add project to user]", "work");
-        entityManager.addUserToProject(user, project);
-        logger.debug("[Add project to user]", "project" + project.getName() + "user " + user.getName());
+        if (project == null) {
+            logger.debug("HomeController", "Add user to project: project " + intputIdProject + " not found");
+            return new ModelAndView("redirect:/home");
+        }
+        logger.debug("HomeController", "trying to add User " + user.getIdUser() + " to project " + project.getIdProject());
+        // TODO:
+        //entityManager.addUserToProject(user, project);
         return new ModelAndView("redirect:/home");
     }
 
@@ -59,7 +63,7 @@ public class HomeController {
         for (Project project : projects) {
             boolean onJenkins = (project.getJenkinsUrl() != null && !project.getJenkinsUrl().isEmpty());
             String jenkinsStatus = null;
-            
+
             if (onJenkins) {
                 jenkins.secureConnect(project.getJenkinsUrl(), JENKINS_USERNAME, JENKINS_PASSWORD);
                 org.acid.ejb.jenkinsconnector.data.Project jenkinsProject = jenkins.getProjectByName(project.getName());
@@ -77,15 +81,15 @@ public class HomeController {
                     + ((onJenkins) ? " | Jenkins status: " + jenkinsStatus : "")
                     + " | <a href=\"removeProject?idProject=" + project.getIdProject() + "\">Remove<span class=\"glyphicon glyphicon-remove-sign\"><span></a>"
                     + "</div>";
-            listProject += "<div class=\"container\"><div class=\"row\" ><div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ><div class=\"sidebar-module\">"
-                    + "         <form class=\"form-addUser\" role=\"form\" method=\"POST\" action=\"" + request.getServletContext().getContextPath() + "/home\">"
-                    + "             <h2 class=\"form-addUser-heading\">Add user to project</h2>"
-                    + "             <label for=\"inputEmail\" class=\"sr-only\">User email address</label>"
-                    + "             <input type=\"email\" id=\"inputEmail\" name=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus>"
-                    + "             <input type=\"hidden\" id=\"inputIdProject\" name=\"inputIdProject\" value=\"" + project.getIdProject() + "\" class=\"form-control\" required>"
-                    + "             <button id=\"submitBtn\" class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Add</button>"
-                    + "         </form>"
-                    + "     </div></div></div></div>";
+//            listProject += "<div class=\"container\"><div class=\"row\" ><div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ><div class=\"sidebar-module\">"
+//                    + "         <form class=\"form-addUser\" role=\"form\" method=\"POST\" action=\"" + request.getServletContext().getContextPath() + "/home\">"
+//                    + "             <h2 class=\"form-addUser-heading\">Add user to project</h2>"
+//                    + "             <label for=\"inputEmail\" class=\"sr-only\">User email address</label>"
+//                    + "             <input type=\"email\" id=\"inputEmail\" name=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus>"
+//                    + "             <input type=\"hidden\" id=\"inputIdProject\" name=\"inputIdProject\" value=\"" + project.getIdProject() + "\" required>"
+//                    + "             <button id=\"submitBtn\" class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Add</button>"
+//                    + "         </form>"
+//                    + "     </div></div></div></div>";
             for (Board board : project.getBoardCollection()) {
                 listProject += "<div class=\"col-sm-3\"><a href=\"board?idBoard=" + board.getIdBoard() + "\"><div class=\"panel board\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"
                         + board.getName()
