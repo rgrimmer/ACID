@@ -17,7 +17,6 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 
-    // Enfaite, j'ai pas le droit d'appeler un bean si je suis pas dans un autre bean ?
     Logger logger;
 
     private DocumentBuilder b;
