@@ -28,5 +28,5 @@ hs_err_pid*
 nb-configuration.xml
 
 # Ignore the bash script as people need to customize it.
-auto.sh
+#auto.sh
 
