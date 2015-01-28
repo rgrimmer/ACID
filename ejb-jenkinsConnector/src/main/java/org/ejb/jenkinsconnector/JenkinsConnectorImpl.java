@@ -5,12 +5,15 @@
 package org.ejb.jenkinsconnector;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import org.acid.ejb.logger.Logger;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.ejb.jenkinsconnector.data.Project;
 
 @Stateful(mappedName = "jenkinsConnector")
 public class JenkinsConnectorImpl implements JenkinsConnector {
@@ -19,6 +22,8 @@ public class JenkinsConnectorImpl implements JenkinsConnector {
     private Logger logger;
 
     private HttpClient client;
+
+    private String hostName;
 
     /**
      * Make a secured connection to a jenkins webApi.
@@ -31,7 +36,7 @@ public class JenkinsConnectorImpl implements JenkinsConnector {
     @Override
     public void secureConnect(String hostName, String user, String password) {
         client = new HttpClient();
-        //hostName = "http://hadrien-belkebir.fr:8080/";
+        this.hostName = hostName;
         GetMethod loginLink = null;
         try {
             loginLink = new GetMethod(hostName + "loginEntry");
@@ -89,11 +94,17 @@ public class JenkinsConnectorImpl implements JenkinsConnector {
     }
 
     @Override
-    public Object getProjectList(String hostname) throws Exception {
+    public List<Project> getProjectList() {
+        List<Project> ret = new ArrayList<>();
+        GetMethod getList = new GetMethod(this.hostName + "api/xml");
+        try {
+            client.executeMethod(getList);
+            XMLParser parser = new XMLParser(getList.getResponseBodyAsStream(), logger);
+            parser.fetchProjectList();
 
-        GetMethod getList = new GetMethod(hostname + "api/xml");
-        client.executeMethod(getList);
-        logger.debug("xmlDisplay", getList.getResponseBodyAsString());
+        } catch (IOException ex) {
+            logger.error("Jenkins connection", "Failed to get project list", ex);
+        }
         return null;
     }
 }

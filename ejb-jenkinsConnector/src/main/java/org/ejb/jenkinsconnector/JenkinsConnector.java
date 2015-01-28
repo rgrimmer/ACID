@@ -5,7 +5,9 @@
  */
 package org.ejb.jenkinsconnector;
 
+import java.util.List;
 import javax.ejb.Remote;
+import org.ejb.jenkinsconnector.data.Project;
 
 /**
  *
@@ -16,6 +18,6 @@ public interface JenkinsConnector {
 
     void secureConnect(String hostname, String user, String password);
 
-    Object getProjectList(String hostname) throws Exception;
+    List<Project> getProjectList();
 
 }
