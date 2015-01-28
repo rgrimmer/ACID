@@ -56,3 +56,6 @@ hr {
 .draggable:hover span {
 	visibility: visible;
 }
+#boardName {
+    margin-bottom: 10px;
+}

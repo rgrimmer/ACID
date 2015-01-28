@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.6deb1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Client: localhost:3306
--- Généré le: Mar 27 Janvier 2015 à 08:57
--- Version du serveur: 5.5.37-0ubuntu0.13.10.1
--- Version de PHP: 5.5.3-1ubuntu2.6
+-- Client: localhost
+-- Généré le: Mer 28 Janvier 2015 à 10:00
+-- Version du serveur: 5.5.41-0ubuntu0.14.04.1
+-- Version de PHP: 5.5.9-1ubuntu4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -59,22 +59,22 @@ CREATE TABLE IF NOT EXISTS `Board_list` (
   KEY `id_board` (`id_board`,`id_list`),
   KEY `id_list` (`id_list`),
   KEY `id_list_2` (`id_list`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Contenu de la table `Board_list`
 --
 
-INSERT INTO `Board_list` (`id_board`, `id_list`) VALUES
-(1, 5),
-(2, 1),
-(2, 2),
-(2, 3),
-(2, 4),
-(3, 1),
-(3, 2),
-(3, 3),
-(3, 4);
+INSERT INTO `Board_list` (`id_board_list`, `id_board`, `id_list`) VALUES
+(1, 1, 5),
+(2, 2, 1),
+(3, 2, 2),
+(4, 2, 3),
+(5, 2, 4),
+(6, 3, 1),
+(7, 3, 2),
+(8, 3, 3),
+(9, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,7 @@ INSERT INTO `List` (`id_list`, `label`) VALUES
 (2, 'DOING'),
 (3, 'DONE'),
 (4, 'DONE DONE'),
-(5, 'DO NEXT');
+(5, 'TODO NEXT');
 
 -- --------------------------------------------------------
 
@@ -120,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `Project` (
 -- Contenu de la table `Project`
 --
 
-INSERT INTO `Project` (`id_project`, `id_owner`, `name`) VALUES
-(1, 3, 'WindowsRebirth');
+INSERT INTO `Project` (`id_project`, `id_owner`, `name`, `jenkins_url`, `sonar_url`) VALUES
+(1, 3, 'org:AccountManager', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -136,16 +136,17 @@ CREATE TABLE IF NOT EXISTS `Project_user` (
   PRIMARY KEY (`id_project_user`),
   KEY `id_project` (`id_project`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `Project_user`
 --
 
-INSERT INTO `Project_user` (`id_project`, `id_user`) VALUES
-(1, 1),
-(1, 2),
-(1, 3);
+INSERT INTO `Project_user` (`id_project_user`, `id_project`, `id_user`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -160,6 +161,7 @@ CREATE TABLE IF NOT EXISTS `Task` (
   `label` varchar(64) NOT NULL,
   `description` varchar(512) NOT NULL,
   `priority` int(11) NOT NULL,
+  `id_sonar` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id_task`),
   KEY `id_board` (`id_board`,`id_list`),
   KEY `id_list` (`id_list`)
@@ -169,11 +171,11 @@ CREATE TABLE IF NOT EXISTS `Task` (
 -- Contenu de la table `Task`
 --
 
-INSERT INTO `Task` (`id_task`, `id_board`, `id_list`, `label`, `description`, `priority`) VALUES
-(1, 1, 5, 'Tache 1 Backlog', 'gniagniagnia gniagniagnia gniagniagnia', 5),
-(2, 2, 2, 'Reparer l''OS', 'Il marche plus', 0),
-(3, 3, 1, 'Butineur explorer', 'Nouveau butineur lent et incompatible avec les feuilles css.', 3),
-(4, 3, 3, 'Firewall qui bloque tout', 'Creer un pare feu qui bloque tout ce qui fait pas, et laisse passer tout le reste.', 4);
+INSERT INTO `Task` (`id_task`, `id_board`, `id_list`, `label`, `description`, `priority`, `id_sonar`) VALUES
+(1, 1, 5, 'Tache 1 Backlog', 'gniagniagnia gniagniagnia gniagniagnia', 5, NULL),
+(2, 2, 2, 'Reparer l''OS', 'Il marche plus', 0, NULL),
+(3, 3, 1, 'Butineur explorer', 'Nouveau butineur lent et incompatible avec les feuilles css.', 3, NULL),
+(4, 3, 3, 'Firewall qui bloque tout', 'Creer un pare feu qui bloque tout ce qui fait pas, et laisse passer tout le reste.', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,16 +211,17 @@ CREATE TABLE IF NOT EXISTS `User` (
   `password` varchar(128) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `User`
 --
 
 INSERT INTO `User` (`id_user`, `email`, `name`, `password`) VALUES
-(1, 'engageGuignol@gmail.com', 'guignol', 'chefouichef'),
-(2, 'blancheNeige@gmail.com', 'blancheNeige', 'jamaisVuUnTasDeMAussiHautQueCa'),
-(3, 'sergentInstructeur@dtc.com', 'Hartman', 'etrangleToi');
+(1, 'engageGuignol@gmail.com', 'guignol', 'ae5eebff12dd75af2fc959fa5ef8bf7c23fb4fde38a0176be14c991d8ff2c440'),
+(2, 'blancheNeige@gmail.com', 'blancheNeige', 'ae5eebff12dd75af2fc959fa5ef8bf7c23fb4fde38a0176be14c991d8ff2c440'),
+(3, 'sergentInstructeur@dtc.com', 'Hartman', 'ae5eebff12dd75af2fc959fa5ef8bf7c23fb4fde38a0176be14c991d8ff2c440'),
+(6, 'test@test.fr', 'Test', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3');
 
 --
 -- Contraintes pour les tables exportées
@@ -228,8 +231,8 @@ INSERT INTO `User` (`id_user`, `email`, `name`, `password`) VALUES
 -- Contraintes pour la table `Board`
 --
 ALTER TABLE `Board`
-  ADD CONSTRAINT `project/type` FOREIGN KEY (`id_type`) REFERENCES `Type` (`id_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `project/board` FOREIGN KEY (`id_project`) REFERENCES `Project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `project/board` FOREIGN KEY (`id_project`) REFERENCES `Project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `project/type` FOREIGN KEY (`id_type`) REFERENCES `Type` (`id_type`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `Board_list`
@@ -248,8 +251,8 @@ ALTER TABLE `Project`
 -- Contraintes pour la table `Project_user`
 --
 ALTER TABLE `Project_user`
-  ADD CONSTRAINT `idUser` FOREIGN KEY (`id_user`) REFERENCES `User` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `idProject` FOREIGN KEY (`id_project`) REFERENCES `Project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `idProject` FOREIGN KEY (`id_project`) REFERENCES `Project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `idUser` FOREIGN KEY (`id_user`) REFERENCES `User` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `Task`

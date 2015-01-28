@@ -58,7 +58,7 @@ public class BoardController {
                     + "<div id=\"draggableContainer" + list.getIdList() + "\" class=\"panel-body\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
 
             for (Task task : board.getTaskCollection()) {
-                if (task.getIdList().getIdList().equals(list.getIdList())) {
+                if (!task.getIdList().getIdList().equals(list.getIdList())) {
                     continue;
                 }
                 lists += "<a href=\"task?idTask=" + task.getIdTask() + "\"><div id=\"draggableItem" + task.getIdTask() + "\" class=\"panel-body draggable\" draggable=\"true\" ondragstart=\"drag(event)\">"
@@ -68,8 +68,8 @@ public class BoardController {
             lists += "</div></div></div>";
         }
 
+        mv.addObject("boardName", board.getName());
         mv.addObject("lists", lists);
-
         return mv;
     }
 
@@ -83,9 +83,7 @@ public class BoardController {
         logger.debug("BoardController", "id tash " + idTask.toString());
         logger.debug("BoardController", "id list " + idList.toString());
         entityManager.moveTask(idTask, idList);
-
         logger.debug("BoardController", "id board " + idBoard.toString());
-
         return board(model, request.getSession(), idBoard);
     }
 

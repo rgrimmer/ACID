@@ -25,38 +25,38 @@
                     ev.target.appendChild(document.getElementById(data));
                     addToDb(document.getElementById(data).id.substring(13), ev.target.id.substring(18));
                 } else if (ev.target.id.substring(0, 13) === "draggableItem") {
-                    $(event.target).parent().append(document.getElementById(data));                  
+                    $(event.target).parent().append(document.getElementById(data));
                     addToDb(document.getElementById(data).id.substring(13), $(event.target).parent().attr('id').substring(18));
                 }
             }
 
             function addToDb(idTask, idList) {
-                post("${pageContext.request.contextPath}/board?idBoard=${idBoard}", {idBoard:${idBoard}, idT:idTask, idL:idList});
-            }
-
-            function post(path, params, method) {
-                method = method || "post"; // Set method to post by default if not specified.
-
-                // The rest of this code assumes you are not using a library.
-                // It can be made less wordy if you use one.
-                var form = document.createElement("form");
-                form.setAttribute("method", method);
-                form.setAttribute("action", path);
-
-                for (var key in params) {
-                    if (params.hasOwnProperty(key)) {
-                        var hiddenField = document.createElement("input");
-                        hiddenField.setAttribute("type", "hidden");
-                        hiddenField.setAttribute("name", key);
-                        hiddenField.setAttribute("value", params[key]);
-
-                        form.appendChild(hiddenField);
+                post("${pageContext.request.contextPath}/board?idBoard=${idBoard}", {idBoard:${idBoard}, idT: idTask, idL: idList});
                     }
-                }
 
-                document.body.appendChild(form);
-                form.submit();
-            }
+                    function post(path, params, method) {
+                        method = method || "post"; // Set method to post by default if not specified.
+
+                        // The rest of this code assumes you are not using a library.
+                        // It can be made less wordy if you use one.
+                        var form = document.createElement("form");
+                        form.setAttribute("method", method);
+                        form.setAttribute("action", path);
+
+                        for (var key in params) {
+                            if (params.hasOwnProperty(key)) {
+                                var hiddenField = document.createElement("input");
+                                hiddenField.setAttribute("type", "hidden");
+                                hiddenField.setAttribute("name", key);
+                                hiddenField.setAttribute("value", params[key]);
+
+                                form.appendChild(hiddenField);
+                            }
+                        }
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
         </script>
     </head>
     <body>
@@ -80,6 +80,10 @@
                 </div>
             </div>
         </nav>
+
+        <div class="container">
+            <strong><span id="boardName">${boardName}</span></strong>
+        </div>
 
         <div class="row">
             ${lists}
