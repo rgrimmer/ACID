@@ -53,7 +53,6 @@ public class XMLParser {
     }
 
     public List<Project> fetchProjectList() {
-
         List<Project> ret = new ArrayList<>();
         if (page != null) {
             NodeList jobs = page.getElementsByTagName("job");
@@ -64,7 +63,6 @@ public class XMLParser {
             }
         }
         return ret;
-
     }
 
 }

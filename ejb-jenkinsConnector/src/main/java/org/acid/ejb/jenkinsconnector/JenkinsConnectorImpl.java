@@ -105,14 +105,11 @@ public class JenkinsConnectorImpl implements JenkinsConnector {
 
     @Override
     public Project getProjectByName(String projectName) {
-        logger.debug("Connection Jenkins", "Project name = " + projectName);
         String[] tokens = projectName.split(":");
         String name = tokens[tokens.length - 1];
-        logger.debug("Connection Jenkins", "name = " + name);
         List<Project> projects = getProjectList();
         if (projects != null) {
             for (Project p : projects) {
-                logger.debug("Connection Jenkins", "name loop = " + p.getProjectName());
                 if (p.getProjectName().equals(name)) {
                     return p;
                 }

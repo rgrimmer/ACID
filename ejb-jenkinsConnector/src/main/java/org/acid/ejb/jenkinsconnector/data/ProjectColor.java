@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public enum ProjectColor implements Serializable {
 
+    UNKNOWN,
     BLUE,
     BLUE_ANIME,
     YELLOW,

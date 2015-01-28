@@ -25,7 +25,12 @@ public class Project implements Serializable {
                     this.projectUrl = info.item(i).getTextContent();
                     break;
                 case "color":
-                    this.color = ProjectColor.valueOf(info.item(i).getTextContent().toUpperCase());
+                    String content = info.item(i).getTextContent();
+                    if (content != null && !content.isEmpty()) {
+                        this.color = ProjectColor.valueOf(info.item(i).getTextContent().toUpperCase());
+                    } else {
+                        this.color = ProjectColor.UNKNOWN;
+                    }
                     break;
             }
         }
