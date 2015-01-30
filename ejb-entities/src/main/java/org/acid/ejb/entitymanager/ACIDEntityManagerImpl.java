@@ -181,7 +181,9 @@ public class ACIDEntityManagerImpl implements ACIDEntityManager {
     public java.util.List<Project> getProjectsByUser(User user) {
 //        em.merge(user);
 //        em.refresh(user);
-        return new LinkedList<Project>(user.getProjectCollection());
+        return (user.getProjectCollection() == null)
+               ? new LinkedList<Project>() :
+               new LinkedList<Project>(user.getProjectCollection());
     }
 
     @Override
